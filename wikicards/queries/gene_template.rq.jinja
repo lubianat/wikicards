@@ -1,0 +1,41 @@
+SELECT
+?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID
+
+(GROUP_CONCAT(DISTINCT ?geneAltLabel_; SEPARATOR=" | ") as ?geneAltLabel)
+
+(GROUP_CONCAT(DISTINCT ?NCBI_locus_tag_; SEPARATOR=", ") as ?NCBI_locus_tag)
+(GROUP_CONCAT(DISTINCT ?MGI_Gene_Symbol_; SEPARATOR=", ") as ?MGI_Gene_Symbol)
+(GROUP_CONCAT(DISTINCT ?HGNC_gene_symbol_; SEPARATOR=", ") as ?HGNC_gene_symbol)
+(GROUP_CONCAT(DISTINCT ?HGNC_ID_; SEPARATOR=", ") as ?HGNC_ID)
+(GROUP_CONCAT(DISTINCT ?OMIM_ID_; SEPARATOR=", ") as ?OMIM_ID)
+(GROUP_CONCAT(DISTINCT ?Ensembl_gene_ID_; SEPARATOR=", ") as ?Ensembl_gene_ID)
+(GROUP_CONCAT(DISTINCT ?RefSeq_RNA_ID_; SEPARATOR=", ") as ?RefSeq_RNA_ID)
+(GROUP_CONCAT(DISTINCT ?PharmGKB_ID_; SEPARATOR=", ") as ?PharmGKB_ID)
+(GROUP_CONCAT(DISTINCT ?Ensembl_transcript_ID_; SEPARATOR=", ") as ?Ensembl_transcript_ID)
+
+WHERE {
+
+    ?gene wdt:P353 "{{target}}" .    
+    ?gene wdt:P688 ?protein . 
+    ?gene skos:altLabel ?geneAltLabel_ . 
+    FILTER ( LANG( ?geneAltLabel_) = "en")
+
+# IDs
+    OPTIONAL { ?gene wdt:P2393 ?NCBI_locus_tag_ . } .    
+    OPTIONAL { ?gene wdt:P2394 ?MGI_Gene_Symbol_ . } .    
+    OPTIONAL { ?gene wdt:P353 ?HGNC_gene_symbol_ . } .    
+    OPTIONAL { ?gene wdt:P354 ?HGNC_ID_ . } .    
+    OPTIONAL { ?gene wdt:P492 ?OMIM_ID_ . } .    
+    OPTIONAL { ?gene wdt:P594 ?Ensembl_gene_ID_ . } .    
+    OPTIONAL { ?gene wdt:P639 ?RefSeq_RNA_ID_ . } .    
+    OPTIONAL { ?gene wdt:P7001 ?PharmGKB_ID_ . } .    
+    OPTIONAL { ?gene wdt:P704 ?Ensembl_transcript_ID_ . } .    
+
+
+    OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .    
+    OPTIONAL { ?gene wdt:P351 ?Entrez_Gene_ID . } .    
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+   
+}
+GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID

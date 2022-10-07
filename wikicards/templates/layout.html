@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>
+    {% block page_title %}
+    wikicards
+    {% endblock %}
+  </title>
+  <meta name="description" content="{% block meta_description %}{% endblock %}" />
+  <meta name="author" content="{% block meta_author %}{% endblock %}" />
+  <meta name="viewport" content="width=device-width" />
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+  <header>{% block header %}{% endblock %}</header>
+
+  <main role="main">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="row">
+      <div class="col-md-12">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+          {{ message }}
+        </div>
+        <!-- end .alert -->
+        {% endfor %}
+      </div>
+      <!-- end col-md -->
+    </div>
+    <!-- end row -->
+    {% endif %} {% endwith %} {% block content %}{% endblock %}
+  </main>
+
+  {% block js %}{% endblock %}
+  <!-- end scripts -->
+</body>
+
+</html>
