@@ -13,7 +13,7 @@ from pathlib import Path
 import urllib
 import requests
 import json
-from helper import get_entrez_summary
+from helper import get_entrez_summary, get_wikipedia_summary
 
 
 HERE = Path(__file__).parent.resolve()
@@ -72,6 +72,9 @@ def search_with_topic(gene_id):
 
     summaries = {}
     summaries["entrez"] = get_entrez_summary(ids["Entrez_Gene_ID"]["symbol"])
+    summaries["wikipedia"] = get_wikipedia_summary(
+        wikidata_result["en_wiki_label"]["value"]
+    )
     return render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,

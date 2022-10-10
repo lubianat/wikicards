@@ -1,6 +1,7 @@
 SELECT
 ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID
 
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 (GROUP_CONCAT(DISTINCT ?geneAltLabel_; SEPARATOR=" | ") as ?geneAltLabel)
 
 (GROUP_CONCAT(DISTINCT ?NCBI_locus_tag_; SEPARATOR=", ") as ?NCBI_locus_tag)
@@ -20,6 +21,12 @@ WHERE {
     ?gene skos:altLabel ?geneAltLabel_ . 
     FILTER ( LANG( ?geneAltLabel_) = "en")
 
+    OPTIONAL{
+    ?article schema:about ?protein .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
 # IDs
     OPTIONAL { ?gene wdt:P2393 ?NCBI_locus_tag_ . } .    
     OPTIONAL { ?gene wdt:P2394 ?MGI_Gene_Symbol_ . } .    
@@ -38,4 +45,4 @@ WHERE {
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
    
 }
-GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID
+GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?article ?en_wiki_label
