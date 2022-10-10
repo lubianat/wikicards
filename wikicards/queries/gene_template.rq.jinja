@@ -1,8 +1,18 @@
 SELECT
-?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID
+?gene ?geneLabel ?UniProt_protein_ID 
 
 (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 (GROUP_CONCAT(DISTINCT ?geneAltLabel_; SEPARATOR=" | ") as ?geneAltLabel)
+
+?cytogenetic_location
+?genomic_start
+?genomic_end
+((xsd:integer(?genomic_end) - xsd:integer(?genomic_start)) AS ?genomic_length)
+?chromosome_number 
+
+# External ids
+?Entrez_Gene_ID
+?MeSH_descriptor_ID
 
 (GROUP_CONCAT(DISTINCT ?NCBI_locus_tag_; SEPARATOR=", ") as ?NCBI_locus_tag)
 (GROUP_CONCAT(DISTINCT ?MGI_Gene_Symbol_; SEPARATOR=", ") as ?MGI_Gene_Symbol)
@@ -27,6 +37,24 @@ WHERE {
     FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
 
     }
+
+
+    OPTIONAL {?gene wdt:P4196 ?cytogenetic_location}
+
+    OPTIONAL {?gene p:P644 [ps:P644 ?genomic_start;
+                            pq:P659 wd:Q20966585  ].
+    }
+    OPTIONAL {?gene p:P645 [ps:P645 ?genomic_end;
+                            pq:P659 wd:Q20966585 ] .
+    }
+
+    OPTIONAL {?gene p:P1057 [ps:P1057 ?chromosome;
+                            pq:P659 wd:Q20966585 ] .
+              ?chromosome wdt:P1813 ?chromosome_number .
+    }
+
+
+
 # IDs
     OPTIONAL { ?gene wdt:P2393 ?NCBI_locus_tag_ . } .    
     OPTIONAL { ?gene wdt:P2394 ?MGI_Gene_Symbol_ . } .    
@@ -41,8 +69,11 @@ WHERE {
 
     OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .    
     OPTIONAL { ?gene wdt:P351 ?Entrez_Gene_ID . } .    
-
+    OPTIONAL { ?gene wdt:P486 ?MeSH_descriptor_ID . } .
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
    
 }
-GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?article ?en_wiki_label
+GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?MeSH_descriptor_ID ?article ?en_wiki_label ?cytogenetic_location
+?genomic_start
+?genomic_end
+?chromosome_number 

@@ -1,0 +1,15 @@
+<!-- ALIASES -->
+<div class="container">
+  <div class="row">
+    <p>------------------------------------</p>
+    <h2> Aliases for {{wikidata_result.geneLabel.value}} </h2>
+    <h3> - Aliases</h3>
+
+    <p>{{wikidata_result.geneAltLabel.value}}</p>
+
+    <h3> - External IDs</h3>
+    {% for id, value in ids.items() %}
+    {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
+    {% endfor %}
+  </div><!-- /.row -->
+</div>

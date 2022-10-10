@@ -57,7 +57,13 @@ def search_with_topic(gene_id):
     wikidata_result = response.json()["results"]["bindings"][0]
     print(wikidata_result)
 
-    ids = {}
+    ids = {
+        "wikidata": {
+            "name": "Wikidata ID",
+            "symbol": wikidata_result["gene"]["value"].split("/")[-1],
+            "url": wikidata_result["gene"]["value"],
+        }
+    }
     # Note that one "value" comes from Wikidata and the other is the value of the "value" key
     for key, value in wikidata_result.items():
         if key in FORMATTER_DICT:
