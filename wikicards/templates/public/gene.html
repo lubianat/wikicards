@@ -1,5 +1,13 @@
 {% extends "layout.html" %}
-{% block content %}
+
+
+
+{% block title %}
+Gene
+{% endblock %}
+
+
+{% block main %}
 
 {% if wikidata_result %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -18,6 +26,42 @@
 {% include 'public/gene/genomics.html' %}
 
 {% else %}
-<h2>Add a valig HGNC gene symbol to the URL</h2>
+<div class="row container">
+  <h4>Select a gene</h4>
+  </br>
+</div>
+<div>
+  <form name="gene" method="POST" action="{{ url_for('gene') }}">
+
+    <div class="row">
+      <title>selectize</title>
+
+
+      <label for="gene">Selectize</label>
+      <select name="gene" class="form-control" id="gene"></select>
+      <button>Send</button>
+
+      <br>
+      <br>
+      <br>
+
+    </div>
+  </form>
+
+  <script>
+    $('#gene').selectize({
+      delimiter: ',',
+      persist: false,
+      valueField: 'name',
+      labelField: 'name',
+      searchField: ['name', 'email'],
+      options: [
+        { name: 'TP53' },
+        { name: 'BRCA2' },
+      ],
+    });
+  </script>
+</div>
+
 {% endif %}
 {% endblock %}

@@ -30,8 +30,12 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/gene/")
+@app.route("/gene/", methods=["GET", "POST"])
 def gene():
+    if request.method == "POST":
+        print(request.form)
+        gene = request.form["gene"]
+        return redirect(f"/gene/{gene}")
 
     return render_template("public/gene.html")
 
