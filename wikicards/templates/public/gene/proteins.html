@@ -1,0 +1,16 @@
+<!-- PROTEINS -->
+<div class="container">
+  <div class="container px-4 py-5"></div>
+  <h2> Proteins for {{wikidata_result.geneLabel.value}} </h2>
+  <h3>Protein details for TP53 Gene </h3>
+  Uniprot ID: <a href="{{ids.UniProt_protein_ID.url}}" target="_blank">{{ids.UniProt_protein_ID.symbol}}</a> <br>
+  Wikidata Label: {{wikidata_result.proteinLabel.value}}
+
+  <h3>Protein attributes for TP53 Gene </h3>
+  Protein length: <strong>{{wikidata_result.protein_length.value}}</strong> amino acids <br>
+  Protein mass: <strong>{{wikidata_result.protein_mass.value}}</strong> daltons
+  <p>Skipped information in relation to Gene Cards: Cofactor (not represented on Wikidata): Quaternary structure
+    (too much noise), Miscellaneous </p>
+  <p>Added information in relation to Gene Cards: </p>
+</div><!-- /.row -->
+</div>

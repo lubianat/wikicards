@@ -1,6 +1,6 @@
 SELECT
 ?gene ?geneLabel ?UniProt_protein_ID 
-
+?protein ?proteinLabel ?protein_length ?protein_mass
 (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 (GROUP_CONCAT(DISTINCT ?geneAltLabel_; SEPARATOR=" | ") as ?geneAltLabel)
 
@@ -31,6 +31,11 @@ WHERE {
     ?gene skos:altLabel ?geneAltLabel_ . 
     FILTER ( LANG( ?geneAltLabel_) = "en")
 
+
+    OPTIONAL {
+      ?protein wdt:P2043 ?protein_length . 
+      ?protein wdt:P2067 ?protein_mass . 
+    }
     OPTIONAL{
     ?article schema:about ?protein .
     ?article schema:inLanguage "en" .
@@ -77,3 +82,4 @@ GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?MeSH_descriptor_I
 ?genomic_start
 ?genomic_end
 ?chromosome_number 
+?protein ?proteinLabel ?protein_length ?protein_mass
