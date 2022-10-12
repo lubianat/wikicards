@@ -1,42 +1,41 @@
 <!-- SUMMARIES -->
 <div class="container">
-  <div class="col-md container">
-    <p>------------------------------------</p>
-    <h2> Summaries for {{wikidata_result.geneLabel.value}} </h2>
-    <h3>Entrez Gene Summary for {{wikidata_result.geneLabel.value}}</h3>(<a href="{{ids.Entrez_Gene_ID.url}}"
-      target="_blank">link</a>)
-    {{summaries.entrez}}
+  <div class="container px-4 py-5"></div>
+  <h2> Summaries for {{wikidata_result.geneLabel.value}} </h2>
+  <h3>Entrez Gene Summary for {{wikidata_result.geneLabel.value}}</h3>(<a href="{{ids.Entrez_Gene_ID.url}}"
+    target="_blank">link</a>)
+  {{summaries.entrez}}
 
-    <h3>CIVIC Gene Summary for {{wikidata_result.geneLabel.value}}</h3>
-    Currently missing; CIVIC Gene ID not available on Wikidata.
-    See <a href="https://www.wikidata.org/wiki/Wikidata:Property_proposal/CIViC_gene_ID">this for status on the
-      proposal. </a>
+  <h3>CIVIC Gene Summary for {{wikidata_result.geneLabel.value}}</h3>
+  Currently missing; CIVIC Gene ID not available on Wikidata.
+  See <a href="https://www.wikidata.org/wiki/Wikidata:Property_proposal/CIViC_gene_ID">this for status on the
+    proposal. </a>
 
-    <h3>Wikipedia summary</h3>
-    (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label.value
+  <h3>Wikipedia summary</h3>
+  (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label.value
     }}" target="_blank">link</a>) <br>
-    <img src="{{summaries.wikipedia.thumbnail.source}}" width="100">
-    {{summaries.wikipedia.extract_html|safe}}
+  <img src="{{summaries.wikipedia.thumbnail.source}}" width="100">
+  {{summaries.wikipedia.extract_html|safe}}
 
-    <h3>Additional information</h3>
-    {% for id, value in ids.items() %}
-    {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
-    {% endfor %}
-    <a href="https://scholia.toolforge.org/gene/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
-    <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a> <br>
-    <a href="https://monarchinitiative.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">Monarch Initiative</a> <br>
-    <a href="https://www.alliancegenome.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">Alliance of Genome Resources</a> <br>
-    <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a><br>
-    <a href="https://datamed.org/search.php?query={wikidata_result.geneLabel.value}}&searchtype=data"> Search for
-      {{wikidata_result.geneLabel.value}} at DataMed
-      Initiative</a> <br>
-    <a
-      href="https://humancyc.org/HUMAN/substring-search?type=GENE&object={{wikidata_result.geneLabel.value}}&geneSearch=Gene+Search">
-      Search for
-      {{wikidata_result.geneLabel.value}} at HumanCyc </a> <br>
+  <h3>Additional information</h3>
+  {% for id, value in ids.items() %}
+  {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
+  {% endfor %}
+  <a href="https://scholia.toolforge.org/gene/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
+  <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a> <br>
+  <a href="https://monarchinitiative.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">Monarch Initiative</a> <br>
+  <a href="https://www.alliancegenome.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">Alliance of Genome Resources</a> <br>
+  <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a><br>
+  <a href="https://datamed.org/search.php?query={wikidata_result.geneLabel.value}}&searchtype=data"> Search for
+    {{wikidata_result.geneLabel.value}} at DataMed
+    Initiative</a> <br>
+  <a
+    href="https://humancyc.org/HUMAN/substring-search?type=GENE&object={{wikidata_result.geneLabel.value}}&geneSearch=Gene+Search">
+    Search for
+    {{wikidata_result.geneLabel.value}} at HumanCyc </a> <br>
 
-    <p>Skipped summaries in relation to Gene Cards:GeneCards Summary for TP53 Gene, UniProtKB/Swiss-Prot Summary for
-      TP53 Gene, Tocris Summary for TP53 Gene
-    </p>
-  </div><!-- /.row -->
+  <p>Skipped summaries in relation to Gene Cards:GeneCards Summary for TP53 Gene, UniProtKB/Swiss-Prot Summary for
+    TP53 Gene, Tocris Summary for TP53 Gene
+  </p>
+</div><!-- /.row -->
 </div>

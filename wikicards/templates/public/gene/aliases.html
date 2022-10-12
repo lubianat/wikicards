@@ -1,15 +1,14 @@
 <!-- ALIASES -->
 <div class="container">
-  <div class="col-md container">
+  <div class="container px-4 py-5"></div>
+  <h2> Aliases for {{wikidata_result.geneLabel.value}} </h2>
+  <h3> - Aliases</h3>
 
-    <h2> Aliases for {{wikidata_result.geneLabel.value}} </h2>
-    <h3> - Aliases</h3>
+  <p>{{wikidata_result.geneAltLabel.value}}</p>
 
-    <p>{{wikidata_result.geneAltLabel.value}}</p>
-
-    <h3> - External IDs</h3>
-    {% for id, value in ids.items() %}
-    {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
-    {% endfor %}
-  </div><!-- /.row -->
+  <h3> - External IDs</h3>
+  {% for id, value in ids.items() %}
+  {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
+  {% endfor %}
+</div><!-- /.row -->
 </div>

@@ -14,7 +14,7 @@ import urllib
 import requests
 import json
 from helper import get_entrez_summary, get_wikipedia_summary
-
+from wikidata2df import wikidata2df
 
 HERE = Path(__file__).parent.resolve()
 QUERIES = HERE.joinpath("queries").resolve()
@@ -27,17 +27,31 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return render_template("index.html")
 
 
-@app.route("/gene/", methods=["GET", "POST"])
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/gene", methods=["GET", "POST"])
 def gene():
     if request.method == "POST":
         print(request.form)
         gene = request.form["gene"]
         return redirect(f"/gene/{gene}")
 
-    return render_template("public/gene.html")
+    all_genes_df = wikidata2df(
+        "SELECT DISTINCT ?HGNC_gene_symbol WHERE {?item wdt:P353 ?HGNC_gene_symbol}"
+    )
+    all_genes = []
+    for gene in all_genes_df["HGNC_gene_symbol"]:
+        all_genes.append({"name": gene})
+    all_genes = json.dumps(all_genes).replace('"name"', "name")
+    all_genes = all_genes.replace('"', "'")
+
+    return render_template("public/gene.html", genes=all_genes)
 
 
 @app.route("/gene/<gene_id>", methods=["GET", "POST"])
@@ -85,6 +99,7 @@ def search_with_topic(gene_id):
     summaries["wikipedia"] = get_wikipedia_summary(
         wikidata_result["en_wiki_label"]["value"]
     )
+
     return render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,

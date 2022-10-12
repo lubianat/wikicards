@@ -31,22 +31,25 @@ Gene
   </br>
 </div>
 <div>
-  <form name="gene" method="POST" action="{{ url_for('gene') }}">
+  <div class="col-md container">
 
-    <div class="row">
+    <form name="gene" method="POST" action="{{ url_for('gene') }}">
+
       <title>selectize</title>
 
 
       <label for="gene">Selectize</label>
       <select name="gene" class="form-control" id="gene"></select>
-      <button>Send</button>
+      <button class="btn btn-primary">Send</button>
+
+      <br>
+
+
 
       <br>
       <br>
-      <br>
-
-    </div>
-  </form>
+    </form>
+  </div>
 
   <script>
     $('#gene').selectize({
@@ -55,10 +58,7 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: [
-        { name: 'TP53' },
-        { name: 'BRCA2' },
-      ],
+      options: {{ genes | safe}},
     });
   </script>
 </div>
