@@ -15,7 +15,7 @@ import requests
 import json
 from helper import get_entrez_summary, get_wikipedia_summary, get_uniprot_isoforms
 from wikidata2df import wikidata2df
-from wdcuration import get_statement_values
+from wdcuration import get_statement_values, query_wikidata
 
 HERE = Path(__file__).parent.resolve()
 QUERIES = HERE.joinpath("queries").resolve()
@@ -63,67 +63,42 @@ def search_with_topic(gene_id):
     )
     query = gene_template.render(target=gene_id)
 
-    try:
-        response = requests.get(
-            url="https://query.wikidata.org/sparql",
-            params={"query": query},
-            headers={"Accept": "application/sparql-results+json"},
-        )
-        response.raise_for_status()
-
-    except requests.exceptions.HTTPError as err:
-        raise requests.exceptions.HTTPError(err)
-    wikidata_result = response.json()["results"]["bindings"][0]
-    print(wikidata_result)
+    wikidata_result = query_wikidata(query)[0]
 
     ids = {
         "wikidata": {
             "name": "Wikidata ID",
-            "symbol": wikidata_result["gene"]["value"].split("/")[-1],
-            "url": wikidata_result["gene"]["value"],
+            "symbol": wikidata_result["gene"].split("/")[-1],
+            "url": wikidata_result["gene"],
         }
     }
     # Note that one "value" comes from Wikidata and the other is the value of the "value" key
     for key, value in wikidata_result.items():
         if key in FORMATTER_DICT:
-            if value["value"] != "" and "," not in value["value"]:
+            if value != "" and "," not in value:
                 name = key.replace("_", " ")
 
                 ids[key] = {
                     "name": name,
-                    "symbol": value["value"],
-                    "url": FORMATTER_DICT[key].replace("$1", value["value"]),
+                    "symbol": value,
+                    "url": FORMATTER_DICT[key].replace("$1", value),
                 }
 
     summaries = {}
     summaries["entrez"] = get_entrez_summary(ids["Entrez_Gene_ID"]["symbol"])
-    summaries["wikipedia"] = get_wikipedia_summary(
-        wikidata_result["en_wiki_label"]["value"]
-    )
+    summaries["wikipedia"] = get_wikipedia_summary(wikidata_result["en_wiki_label"])
 
     protein_template = Template(
         QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
     )
-    protein_qid = wikidata_result["protein"]["value"].split("/")[-1]
+    protein_qid = wikidata_result["protein"].split("/")[-1]
     query = protein_template.render(protein_qid=protein_qid)
 
-    try:
-        response = requests.get(
-            url="https://query.wikidata.org/sparql",
-            params={"query": query},
-            headers={"Accept": "application/sparql-results+json"},
-        )
-        response.raise_for_status()
-
-    except requests.exceptions.HTTPError as err:
-        raise requests.exceptions.HTTPError(err)
-    protein_result = response.json()["results"]["bindings"][0]
-    uniprot_isoforms = get_uniprot_isoforms(
-        protein_result["UniProt_protein_ID"]["value"]
-    )
+    protein_result = query_wikidata(query)[0]
+    uniprot_isoforms = get_uniprot_isoforms(protein_result["UniProt_protein_ID"])
     protein_result["isoforms"] = uniprot_isoforms
     protein_result["pdb_ids"] = [
-        {"id": id} for id in protein_result["PDB_structure_ID"]["value"].split(" | ")
+        {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")
     ]
     protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
     protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")

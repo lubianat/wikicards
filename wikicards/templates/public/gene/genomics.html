@@ -1,23 +1,23 @@
 <!-- SUMMARIES -->
 <div class="container" id="genomics">
   <div class="container px-4 py-5"></div>
-  <h2> Genomics for {{wikidata_result.geneLabel.value}} </h2>
+  <h2> Genomics for {{wikidata_result.geneLabel}} </h2>
 
   <h3>Genomic locations (assembly GRCh38/hg38)</h3>
-  Chromosome number: {{wikidata_result.chromosome_number.value}} <br>
-  Cytogenetic location: {{wikidata_result.cytogenetic_location.value}} <br>
-  Genomic start: {{wikidata_result.genomic_start.value}} | Genomic end:
-  {{wikidata_result.genomic_end.value}} <br>
-  Length: {{wikidata_result.genomic_length.value}} base pairs.
+  Chromosome number: {{wikidata_result.chromosome_number}} <br>
+  Cytogenetic location: {{wikidata_result.cytogenetic_location}} <br>
+  Genomic start: {{wikidata_result.genomic_start}} | Genomic end:
+  {{wikidata_result.genomic_end}} <br>
+  Length: {{wikidata_result.genomic_length}} base pairs.
 
   <h3>Genomic view</h3>
 
   RefSeq DNA sequence:
   <a
-    href="https://www.ncbi.nlm.nih.gov/nuccore/NC_0000{{wikidata_result.chromosome_number.value}}.11?strand=2&report=genbank&from={{wikidata_result.genomic_start.value}}&to={{wikidata_result.genomic_end.value}}">NC_0000{{wikidata_result.chromosome_number.value}}.11</a>
+    href="https://www.ncbi.nlm.nih.gov/nuccore/NC_0000{{wikidata_result.chromosome_number}}.11?strand=2&report=genbank&from={{wikidata_result.genomic_start}}&to={{wikidata_result.genomic_end}}">NC_0000{{wikidata_result.chromosome_number}}.11</a>
   <br>
-  Genes around {{wikidata_result.geneLabel.value}} on UCSC Golden Path: <a
-    href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position={{wikidata_result.chromosome_number.value}}:{{wikidata_result.genomic_start.value}}-{{wikidata_result.genomic_end.value}}">GRCh38/hg38</a>
+  Genes around {{wikidata_result.geneLabel}} on UCSC Golden Path: <a
+    href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position={{wikidata_result.chromosome_number}}:{{wikidata_result.genomic_start}}-{{wikidata_result.genomic_end}}">GRCh38/hg38</a>
   <div class="small-ideogram">
     <!-- The ideogram goes here. -->
   </div>
@@ -27,14 +27,14 @@
       container: '.small-ideogram',
 
       organism: 'human',
-      chromosome: '{{wikidata_result.chromosome_number.value}}',
+      chromosome: '{{wikidata_result.chromosome_number}}',
       chrHeight: 600,
       orientation: 'horizontal',
       annotations: [{
-        name: '{{wikidata_result.geneLabel.value}}',
-        chr: '{{wikidata_result.chromosome_number.value}}',
-        start: {{ wikidata_result.genomic_start.value }},
-      stop: {{ wikidata_result.genomic_end.value }}
+        name: '{{wikidata_result.geneLabel}}',
+        chr: '{{wikidata_result.chromosome_number}}',
+        start: {{ wikidata_result.genomic_start }},
+      stop: {{ wikidata_result.genomic_end }}
         }]
       };
 
