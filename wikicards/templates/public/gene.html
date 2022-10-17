@@ -18,7 +18,29 @@ Gene
   </div>
 </div><!-- /.jumbotron -->
 
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Go to session</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#aliases">Aliases</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#summaries">Summaries</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#genomics">Genomics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#proteins">Proteins</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 {% include 'public/gene/aliases.html' %}
 
 {% include 'public/gene/summaries.html' %}

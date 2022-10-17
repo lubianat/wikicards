@@ -1,5 +1,5 @@
 <!-- PROTEINS -->
-<div class="container">
+<div class="container" id="proteins">
   <div class="container px-4 py-5"></div>
   <h2> Proteins for {{wikidata_result.geneLabel.value}} </h2>
   <h3>Protein details for TP53 Gene </h3>
@@ -12,10 +12,71 @@
 
 
   <h3>Structural information</h3>
-  {{protein_result.PDB_structure_ID.value}}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>PDBe</th>
+        <th>RCSB PDB</th>
+        <th>Proteopedia</th>
 
+      </tr>
+    </thead>
+    <tbody>
+      {% for pdb_id in protein_result.pdb_ids %}
+      <tr>
+        <td> <a target="_blank" href="https://www.ebi.ac.uk/pdbe/entry/pdb/{{ pdb_id.id }}" title="Details in PDBe">{{
+            pdb_id.id }}</a></td>
+        <td> <a target="_blank" href="https://www.rcsb.org/structure/{{ pdb_id.id }}" title="Details in RCSB-PDB">{{
+            pdb_id.id }}</a></td>
+        <td> <a target="_blank" href="https://proteopedia.org/wiki/index.php/{{ pdb_id.id | lower}}"
+            title="Details in Proteopedia">{{
+            pdb_id.id }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>AlphaFold predicted structure</h3> <a
+    href="https://alphafold.ebi.ac.uk/entry/{{protein_result.UniProt_protein_ID.value}}"
+    target="_blank">{{protein_result.UniProt_protein_ID.value}}</a>
+
+  <h3> Protein isoforms </h3>
+  <p>
+    {% for isoform in protein_result.isoforms %}
+    <a href="https://www.uniprot.org/uniprotkb/{{isoform.id}}/entry" target="_blank">{{isoform.id}} </a>
+    {% endfor %}
+  </p>
+
+  <h3> NeXtProt proteomics information </h3>
+  <a href="https://www.nextprot.org/entry/{{protein_result.UniProt_protein_ID.value}}/proteomics"
+    target="_blank">{{protein_result.UniProt_protein_ID.value}}</a>
+
+
+  <h3> Other identifiers </h3>
+  <h4>ENSEMBL Proteins</h4>
+  <p>
+    {% for id in protein_result.ensembl_ids %}
+    <a href="https://www.ensembl.org/Homo_sapiens/protview?peptide={{id.id}}" target="_blank">{{id.id}} </a>
+    {% endfor %}
+  </p>
+  <h4>RefSeq Proteins Ids</h4>
+  <p>
+    {% for id in protein_result.refseq_ids %}
+    <a href="https://www.ncbi.nlm.nih.gov/protein/{{id.id}}?report=GenPept" target="_blank">{{id.id}} </a>
+    {% endfor %}
+  </p>
   <p>Skipped information in relation to Gene Cards: Cofactor (not represented on Wikidata): Quaternary structure
-    (too much noise), Miscellaneous </p>
+    (too much noise), Miscellaneous, OCA protein structure, link to Protein Expression for the gene, Post-translational
+    modifications (not sure where to retrieve),
+
+  </p>
   <p>Added information in relation to Gene Cards: </p>
 </div><!-- /.row -->
 </div>
+<script>
+  $(document).ready(function () {
+    $('#data').DataTable({
+      pageLength: 5,
+    });
+  });
+</script>

@@ -13,7 +13,7 @@ from pathlib import Path
 import urllib
 import requests
 import json
-from helper import get_entrez_summary, get_wikipedia_summary
+from helper import get_entrez_summary, get_wikipedia_summary, get_uniprot_isoforms
 from wikidata2df import wikidata2df
 
 HERE = Path(__file__).parent.resolve()
@@ -118,7 +118,19 @@ def search_with_topic(gene_id):
     except requests.exceptions.HTTPError as err:
         raise requests.exceptions.HTTPError(err)
     protein_result = response.json()["results"]["bindings"][0]
-    print(protein_result)
+    uniprot_isoforms = get_uniprot_isoforms(
+        protein_result["UniProt_protein_ID"]["value"]
+    )
+    protein_result["isoforms"] = uniprot_isoforms
+    protein_result["pdb_ids"] = [
+        {"id": id} for id in protein_result["PDB_structure_ID"]["value"].split(" | ")
+    ]
+    protein_result["ensembl_ids"] = [
+        {"id": id} for id in protein_result["Ensembl_protein_ID"]["value"].split(" | ")
+    ]
+    protein_result["refseq_ids"] = [
+        {"id": id} for id in protein_result["RefSeq protein ID"]["value"].split(" | ")
+    ]
 
     return render_template(
         "public/gene.html",
