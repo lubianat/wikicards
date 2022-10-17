@@ -15,6 +15,7 @@ import requests
 import json
 from helper import get_entrez_summary, get_wikipedia_summary, get_uniprot_isoforms
 from wikidata2df import wikidata2df
+from wdcuration import get_statement_values
 
 HERE = Path(__file__).parent.resolve()
 QUERIES = HERE.joinpath("queries").resolve()
@@ -103,9 +104,8 @@ def search_with_topic(gene_id):
     protein_template = Template(
         QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
     )
-    query = protein_template.render(
-        protein_qid=wikidata_result["protein"]["value"].split("/")[-1]
-    )
+    protein_qid = wikidata_result["protein"]["value"].split("/")[-1]
+    query = protein_template.render(protein_qid=protein_qid)
 
     try:
         response = requests.get(
@@ -125,12 +125,8 @@ def search_with_topic(gene_id):
     protein_result["pdb_ids"] = [
         {"id": id} for id in protein_result["PDB_structure_ID"]["value"].split(" | ")
     ]
-    protein_result["ensembl_ids"] = [
-        {"id": id} for id in protein_result["Ensembl_protein_ID"]["value"].split(" | ")
-    ]
-    protein_result["refseq_ids"] = [
-        {"id": id} for id in protein_result["RefSeq protein ID"]["value"].split(" | ")
-    ]
+    protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
+    protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
 
     return render_template(
         "public/gene.html",

@@ -3,10 +3,6 @@ SELECT
 ?protein ?proteinLabel ?protein_length ?protein_mass
 (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 (GROUP_CONCAT(DISTINCT ?proteinAltLabel_; SEPARATOR=" | ") as ?proteinAltLabel)
-(GROUP_CONCAT(DISTINCT ?RefSeq_protein_ID_; SEPARATOR=" | ") as ?RefSeq_protein_ID)
-(GROUP_CONCAT(DISTINCT ?Ensembl_protein_ID_; SEPARATOR=" | ") as ?Ensembl_protein_ID)
-
-
 (GROUP_CONCAT(DISTINCT ?PDB_structure_ID_; SEPARATOR=" | ") as ?PDB_structure_ID)
 WHERE {
 
@@ -25,9 +21,6 @@ WHERE {
     FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
 
     }
-
-    OPTIONAL { ?protein wdt:P705 ?Ensembl_protein_ID_ . } .  
-    OPTIONAL { ?protein wdt:P637 ?RefSeq_protein_ID_ . } .  
 
     OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .  
 

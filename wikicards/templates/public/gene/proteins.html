@@ -56,13 +56,13 @@
   <h4>ENSEMBL Proteins</h4>
   <p>
     {% for id in protein_result.ensembl_ids %}
-    <a href="https://www.ensembl.org/Homo_sapiens/protview?peptide={{id.id}}" target="_blank">{{id.id}} </a>
+    <a href="https://www.ensembl.org/Homo_sapiens/protview?peptide={{id}}" target="_blank">{{id}} </a>
     {% endfor %}
   </p>
   <h4>RefSeq Proteins Ids</h4>
   <p>
     {% for id in protein_result.refseq_ids %}
-    <a href="https://www.ncbi.nlm.nih.gov/protein/{{id.id}}?report=GenPept" target="_blank">{{id.id}} </a>
+    <a href="https://www.ncbi.nlm.nih.gov/protein/{{id}}?report=GenPept" target="_blank">{{id}} </a>
     {% endfor %}
   </p>
   <p>Skipped information in relation to Gene Cards: Cofactor (not represented on Wikidata): Quaternary structure
