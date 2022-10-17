@@ -23,7 +23,6 @@ SELECT
 (GROUP_CONCAT(DISTINCT ?RefSeq_RNA_ID_; SEPARATOR=", ") as ?RefSeq_RNA_ID)
 (GROUP_CONCAT(DISTINCT ?PharmGKB_ID_; SEPARATOR=", ") as ?PharmGKB_ID)
 (GROUP_CONCAT(DISTINCT ?Ensembl_transcript_ID_; SEPARATOR=", ") as ?Ensembl_transcript_ID)
-
 WHERE {
 
     ?gene wdt:P353 "{{target}}" .    
@@ -72,7 +71,7 @@ WHERE {
     OPTIONAL { ?gene wdt:P704 ?Ensembl_transcript_ID_ . } .    
 
 
-    OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .    
+    OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .  
     OPTIONAL { ?gene wdt:P351 ?Entrez_Gene_ID . } .    
     OPTIONAL { ?gene wdt:P486 ?MeSH_descriptor_ID . } .
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }

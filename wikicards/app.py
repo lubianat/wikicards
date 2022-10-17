@@ -100,9 +100,30 @@ def search_with_topic(gene_id):
         wikidata_result["en_wiki_label"]["value"]
     )
 
+    protein_template = Template(
+        QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
+    )
+    query = protein_template.render(
+        protein_qid=wikidata_result["protein"]["value"].split("/")[-1]
+    )
+
+    try:
+        response = requests.get(
+            url="https://query.wikidata.org/sparql",
+            params={"query": query},
+            headers={"Accept": "application/sparql-results+json"},
+        )
+        response.raise_for_status()
+
+    except requests.exceptions.HTTPError as err:
+        raise requests.exceptions.HTTPError(err)
+    protein_result = response.json()["results"]["bindings"][0]
+    print(protein_result)
+
     return render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,
+        protein_result=protein_result,
         ids=ids,
         summaries=summaries,
     )
