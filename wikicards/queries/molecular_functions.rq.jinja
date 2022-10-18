@@ -1,0 +1,34 @@
+SELECT
+?function ?functionLabel ?Gene_Ontology_ID
+(SAMPLE(CONCAT("PubMed:",?pmid)) AS ?sample_pmid)
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+(GROUP_CONCAT(DISTINCT?methodLabel;SEPARATOR=", ") AS ?evidence)
+(COUNT(DISTINCT ?pmid) as ?ref_count)
+WHERE {
+
+    VALUES ?protein { wd:{{protein_qid}} } .   
+
+    ?protein p:P680 [ps:P680 ?function ;
+                     pq:P459 ?method ;
+                     prov:wasDerivedFrom ?refnode ] . 
+  
+    OPTIONAL{?refnode   pr:P248 ?ref  .
+            ?ref wdt:P698 ?pmid .
+            
+            } . 
+    
+    ?method rdfs:label ?methodLabel . FILTER (LANG (?methodLabel) = "en")
+  
+    ?function wdt:P686 ?Gene_Ontology_ID .
+    
+    ?function rdfs:label ?functionLabel . FILTER (LANG (?functionLabel) = "en")
+    OPTIONAL{
+    ?article schema:about ?function .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+   
+}
+  GROUP BY ?function ?functionLabel ?Gene_Ontology_ID ?article
+ORDER BY DESC(?ref_count)

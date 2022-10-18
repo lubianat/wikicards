@@ -16,7 +16,33 @@
         {% endfor %}
 
       </ul>
-      <p>Skipped: </p>
+      <h3>Gene Ontology Molecular Functions</h3>
+      <table id="data2" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Gene Ontology ID</th>
+            <th>Wikidata Label</th>
+            <th>GO Evidence Codes</th>
+            <th>Sample article</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for molecular_function in protein_result.molecular_functions %}
+          <tr>
+            <td> <a target="_blank"
+                href="http://amigo.geneontology.org/amigo/term/{{ molecular_function.Gene_Ontology_ID }}">{{
+                molecular_function.Gene_Ontology_ID }}</a></td>
+            <td> {{molecular_function.functionLabel }}</td>
+            <td> {{molecular_function.evidence}}</td>
+            <td> {{molecular_function.sample_pmid}}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p>Skipped: Induction, Molecular function for TP53 Gene according to GENATLAS,Phenotypes From GWAS Catalog,</p>
 
     </div>
 

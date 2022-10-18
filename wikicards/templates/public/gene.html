@@ -58,7 +58,19 @@ Gene
 {% include 'public/gene/domains.html' %}
 
 {% include 'public/gene/functions.html' %}
+<script>
+  $(document).ready(function () {
+    $('#data').DataTable({
+      pageLength: 5,
+    });
+  });
 
+  $(document).ready(function () {
+    $('#data2').DataTable({
+      pageLength: 5,
+    });
+  });
+</script>
 {% else %}
 <div class="row container">
   <h4>Select a gene</h4>
@@ -92,6 +104,7 @@ Gene
       options: {{ genes | safe}},
     });
   </script>
+
 </div>
 
 {% endif %}

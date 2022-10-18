@@ -115,6 +115,15 @@ def search_with_topic(gene_id):
     query = protein_template.render(protein_qid=protein_qid)
 
     protein_result["domains"] = query_wikidata(query)
+
+    protein_template = Template(
+        QUERIES.joinpath("molecular_functions.rq.jinja").read_text(encoding="UTF-8")
+    )
+
+    query = protein_template.render(protein_qid=protein_qid)
+
+    protein_result["molecular_functions"] = query_wikidata(query)
+
     web_page = render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,
