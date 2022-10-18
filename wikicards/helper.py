@@ -27,6 +27,8 @@ def get_uniprot_info(uniprot_id):
     uniprot_dict = xmltodict.parse(r.text)
     uniprot_info = {}
     uniprot_info["ptm_info"] = []
+    uniprot_info["function_info"] = []
+
     for i in uniprot_dict["uniprot"]["entry"]["comment"]:
         if i["@type"] == "alternative products":
             uniprot_info["isoforms"] = i["isoform"]
@@ -37,5 +39,12 @@ def get_uniprot_info(uniprot_id):
                 uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
             else:
                 uniprot_info["ptm_info"].extend(i["text"].split("."))
+        if i["@type"] == "function":
+            if "#text" in i["text"]:
+                uniprot_info["function_info"].extend(i["text"]["#text"].split("."))
+            else:
+                uniprot_info["function_info"].extend(i["text"].split("."))
+    uniprot_info["function_info"] = list(filter(None, uniprot_info["function_info"]))
+    print(uniprot_info["function_info"])
     uniprot_info["ptm_info"] = list(filter(None, uniprot_info["ptm_info"]))
     return uniprot_info
