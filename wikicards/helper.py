@@ -21,9 +21,14 @@ def get_wikipedia_summary(page_name):
     return json.loads(r.text)
 
 
-def get_uniprot_isoforms(uniprot_id):
+def get_uniprot_info(uniprot_id):
+
     r = requests.get(f"https://rest.uniprot.org/uniprotkb/{uniprot_id}.xml")
     uniprot_dict = xmltodict.parse(r.text)
+    uniprot_info = {}
     for i in uniprot_dict["uniprot"]["entry"]["comment"]:
         if i["@type"] == "alternative products":
-            return i["isoform"]
+            uniprot_info["isoforms"] = i["isoform"]
+        if i["@type"] == "domain":
+            uniprot_info["domain_info"] = i["text"]["#text"]
+    return uniprot_info

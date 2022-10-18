@@ -42,7 +42,7 @@
 
   <h3> Protein isoforms </h3>
   <p>
-    {% for isoform in protein_result.isoforms %}
+    {% for isoform in uniprot_info.isoforms %}
     <a href="https://www.uniprot.org/uniprotkb/{{isoform.id}}/entry" target="_blank">{{isoform.id}} </a>
     {% endfor %}
   </p>
@@ -67,7 +67,7 @@
   </p>
   <p>Skipped information in relation to Gene Cards: Cofactor (not represented on Wikidata): Quaternary structure
     (too much noise), Miscellaneous, OCA protein structure, link to Protein Expression for the gene, Post-translational
-    modifications (not sure where to retrieve),
+    modifications (not sure where to retrieve), protein-related product links (not clear how to generate)
 
   </p>
   <p>Added information in relation to Gene Cards: </p>

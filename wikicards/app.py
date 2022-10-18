@@ -13,7 +13,12 @@ from pathlib import Path
 import urllib
 import requests
 import json
-from helper import get_entrez_summary, get_wikipedia_summary, get_uniprot_isoforms
+from helper import (
+    get_entrez_summary,
+    get_uniprot_info,
+    get_wikipedia_summary,
+    get_uniprot_info,
+)
 from wikidata2df import wikidata2df
 from wdcuration import get_statement_values, query_wikidata
 
@@ -95,18 +100,25 @@ def search_with_topic(gene_id):
     query = protein_template.render(protein_qid=protein_qid)
 
     protein_result = query_wikidata(query)[0]
-    uniprot_isoforms = get_uniprot_isoforms(protein_result["UniProt_protein_ID"])
-    protein_result["isoforms"] = uniprot_isoforms
+    uniprot_info = get_uniprot_info(protein_result["UniProt_protein_ID"])
     protein_result["pdb_ids"] = [
         {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")
     ]
     protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
     protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
 
+    protein_template = Template(
+        QUERIES.joinpath("domains_and_families.rq.jinja").read_text(encoding="UTF-8")
+    )
+
+    query = protein_template.render(protein_qid=protein_qid)
+
+    protein_result["domains"] = query_wikidata(query)
     return render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,
         protein_result=protein_result,
+        uniprot_info=uniprot_info,
         ids=ids,
         summaries=summaries,
     )

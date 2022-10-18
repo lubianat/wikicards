@@ -1,0 +1,14 @@
+SELECT
+?domain ?domainLabel ?InterPro_ID
+WHERE {
+
+    VALUES ?protein { wd:{{protein_qid}}  } .    
+
+    ?protein wdt:P527 ?domain . 
+
+    ?domain wdt:P2926 ?InterPro_ID .
+  
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+   
+}
+
