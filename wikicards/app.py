@@ -21,6 +21,7 @@ from helper import (
 )
 from wikidata2df import wikidata2df
 from wdcuration import get_statement_values, query_wikidata
+import re
 
 HERE = Path(__file__).parent.resolve()
 QUERIES = HERE.joinpath("queries").resolve()
@@ -114,7 +115,7 @@ def search_with_topic(gene_id):
     query = protein_template.render(protein_qid=protein_qid)
 
     protein_result["domains"] = query_wikidata(query)
-    return render_template(
+    web_page = render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,
         protein_result=protein_result,
@@ -122,3 +123,12 @@ def search_with_topic(gene_id):
         ids=ids,
         summaries=summaries,
     )
+
+    web_page = re.sub(
+        "PubMed:([0-9]*)",
+        '<a href="https://pubmed.ncbi.nlm.nih.gov/\\1" target=" _blank">PMID:\\1</a>',
+        web_page,
+        count=0,
+        flags=0,
+    )
+    return web_page
