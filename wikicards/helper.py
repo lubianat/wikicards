@@ -26,9 +26,16 @@ def get_uniprot_info(uniprot_id):
     r = requests.get(f"https://rest.uniprot.org/uniprotkb/{uniprot_id}.xml")
     uniprot_dict = xmltodict.parse(r.text)
     uniprot_info = {}
+    uniprot_info["ptm_info"] = []
     for i in uniprot_dict["uniprot"]["entry"]["comment"]:
         if i["@type"] == "alternative products":
             uniprot_info["isoforms"] = i["isoform"]
         if i["@type"] == "domain":
             uniprot_info["domain_info"] = i["text"]["#text"]
+        if i["@type"] == "PTM":
+            if "#text" in i["text"]:
+                uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
+            else:
+                uniprot_info["ptm_info"].extend(i["text"].split("."))
+    uniprot_info["ptm_info"] = list(filter(None, uniprot_info["ptm_info"]))
     return uniprot_info
