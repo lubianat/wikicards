@@ -2,19 +2,19 @@
 <div class="container" id="functions">
   <div class="card">
     <div class="card-header">
-      <h2> Functions for {{wikidata_result.geneLabel}} </h2>
+      <h2>Functions for {{wikidata_result.geneLabel}}</h2>
     </div>
     <div class="card-body">
-
-      <h3>Molecular function for TP53 Gene according to UniProtKB/Swiss-Prot </h3>
+      <h3>
+        Molecular function for TP53 Gene according to UniProtKB/Swiss-Prot
+      </h3>
       <a href="https://www.uniprot.org/uniprotkb/P04637/{protein_result.UniProt_protein_ID}}/entry#function"
-        target=" _blank">{{protein_result.UniProt_protein_ID}}</a><br>
+        target=" _blank">{{protein_result.UniProt_protein_ID}}</a><br />
 
       <ul>
         {% for function_entry in uniprot_info.function_info %}
-        <li>{{function_entry}} </li>
+        <li>{{function_entry}}</li>
         {% endfor %}
-
       </ul>
       <h3>Gene Ontology Molecular Functions</h3>
       <table id="data2" class="table table-striped">
@@ -24,28 +24,28 @@
             <th>Wikidata Label</th>
             <th>GO Evidence Codes</th>
             <th>Sample article</th>
-
           </tr>
         </thead>
         <tbody>
           {% for molecular_function in protein_result.molecular_functions %}
           <tr>
-            <td> <a target="_blank"
-                href="http://amigo.geneontology.org/amigo/term/{{ molecular_function.Gene_Ontology_ID }}">{{
-                molecular_function.Gene_Ontology_ID }}</a></td>
-            <td> {{molecular_function.functionLabel }}</td>
-            <td> {{molecular_function.evidence}}</td>
-            <td> {{molecular_function.sample_pmid}}</td>
-
+            <td>
+              <a target="_blank"
+                href="http://amigo.geneontology.org/amigo/term/{{ molecular_function.Gene_Ontology_ID }}">{{ molecular_function.Gene_Ontology_ID }}</a>
+            </td>
+            <td>{{molecular_function.functionLabel }}</td>
+            <td>{{molecular_function.evidence}}</td>
+            <td>{{molecular_function.sample_pmid}}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
 
-      <p>Skipped: Induction, Molecular function for TP53 Gene according to GENATLAS,Phenotypes From GWAS Catalog,</p>
-
+      <p>
+        Skipped: Induction, Molecular function for TP53 Gene according to
+        GENATLAS,Phenotypes From GWAS Catalog,
+      </p>
     </div>
-
-
-  </div><!-- /.row -->
+  </div>
+  <!-- /.row -->
 </div>

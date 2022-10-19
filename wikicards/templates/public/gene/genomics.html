@@ -35,10 +35,10 @@
           annotations: [{
             name: '{{wikidata_result.geneLabel}}',
             chr: '{{wikidata_result.chromosome_number}}',
-            start: {{ wikidata_result.genomic_start }},
-          stop: {{ wikidata_result.genomic_end }}
-        }]
-      };
+            start: {{wikidata_result.genomic_start}} ,
+            stop: {{wikidata_result.genomic_end}}
+          }]
+        };
 
         var ideogram2 = new Ideogram(config);
       </script>

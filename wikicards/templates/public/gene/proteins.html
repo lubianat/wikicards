@@ -27,8 +27,7 @@
         <tbody>
           {% for pdb_id in protein_result.pdb_ids %}
           <tr>
-            <td> <a target="_blank" href="https://www.ebi.ac.uk/pdbe/entry/pdb/{{ pdb_id.id }}"
-                title="Details in PDBe">{{
+            <td> <a target="_blank" href="https://www.ebi.ac.uk/pdbe/entry/pdb/{{ pdb_id.id }}" title="Details in PDBe">{{
                 pdb_id.id }}</a></td>
             <td> <a target="_blank" href="https://www.rcsb.org/structure/{{ pdb_id.id }}" title="Details in RCSB-PDB">{{
                 pdb_id.id }}</a></td>
