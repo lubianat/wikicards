@@ -116,6 +116,16 @@ def search_with_topic(gene_id):
         "molecular_functions", protein_qid=protein_qid
     )
 
+    protein_result["cell_components"] = get_wikidata_info(
+        "cell_components", protein_qid=protein_qid
+    )
+
+    protein_result["swissbiopics_list"] = ",".join(
+        [
+            a["Gene_Ontology_ID"].split(":")[-1]
+            for a in protein_result["cell_components"]
+        ]
+    )
     web_page = render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,

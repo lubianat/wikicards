@@ -44,6 +44,10 @@ Gene
       <li class="nav-item">
         <a class="nav-link" href="#functions">Functions</a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#localizations">Localizations</a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -58,6 +62,9 @@ Gene
 {% include 'public/gene/domains.html' %}
 
 {% include 'public/gene/functions.html' %}
+
+{% include 'public/gene/localizations.html' %}
+
 <script>
   $(document).ready(function () {
     $('#data').DataTable({
@@ -67,6 +74,12 @@ Gene
 
   $(document).ready(function () {
     $('#data2').DataTable({
+      pageLength: 5,
+    });
+  });
+
+  $(document).ready(function () {
+    $('#go_cell_components_table').DataTable({
       pageLength: 5,
     });
   });
@@ -101,7 +114,11 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: {{ genes | safe}},
+      options: {
+        {
+          genes | safe
+        }
+      },
     });
   </script>
 
