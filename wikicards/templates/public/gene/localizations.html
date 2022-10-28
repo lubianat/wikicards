@@ -16,7 +16,7 @@
         <li>{{function_entry}}</li>
         {% endfor %}
       </ul>
-      <h3>Gene Ontology Molecular Functions</h3>
+      <h3>Gene Ontology Cell Components</h3>
       <table id="data2" class="table table-striped">
         <thead>
           <tr>
@@ -27,24 +27,22 @@
           </tr>
         </thead>
         <tbody>
-          {% for molecular_function in protein_result.molecular_functions %}
+          {% for cell_component in protein_result.cell_components %}
           <tr>
             <td>
               <a target="_blank"
-                href="http://amigo.geneontology.org/amigo/term/{{ molecular_function.Gene_Ontology_ID }}">{{ molecular_function.Gene_Ontology_ID }}</a>
+                href="http://amigo.geneontology.org/amigo/term/{{ cell_component.Gene_Ontology_ID }}">{{ cell_component.Gene_Ontology_ID }}</a>
             </td>
-            <td>{{molecular_function.functionLabel }}</td>
-            <td>{{molecular_function.evidence}}</td>
-            <td>{{molecular_function.sample_pmid}}</td>
+            <td>{{cell_component.functionLabel }}</td>
+            <td>{{cell_component.evidence}}</td>
+            <td>{{cell_component.sample_pmid}}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
 
       <p>
-        Skipped: Induction, Molecular function for TP53 Gene according to
-        GENATLAS,Phenotypes From GWAS Catalog, MGI and GenomeRNAi phenotypes, HPO phenotypes (not yet represented on
-        Wikidata), Animal models, commercial products
+        Skipped: Subcellular localizations image (use SwissBioPics to generate), qualifiers for GO terms
       </p>
     </div>
   </div>

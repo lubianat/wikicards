@@ -1,0 +1,34 @@
+SELECT
+?cell_component ?cell_componentLabel ?Gene_Ontology_ID
+(SAMPLE(CONCAT("PubMed:",?pmid)) AS ?sample_pmid)
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+(GROUP_CONCAT(DISTINCT?methodLabel;SEPARATOR=", ") AS ?evidence)
+(COUNT(DISTINCT ?pmid) as ?ref_count)
+WHERE {
+
+    VALUES ?protein { wd:{{protein_qid}} } .   
+
+    ?protein p:P681 [ps:P681 ?cell_component ;
+                     pq:P459 ?method ;
+                     prov:wasDerivedFrom ?refnode ] . 
+  
+    OPTIONAL{?refnode   pr:P248 ?ref  .
+            ?ref wdt:P698 ?pmid .
+            
+            } . 
+    
+    ?method rdfs:label ?methodLabel . FILTER (LANG (?methodLabel) = "en")
+  
+    ?cell_component wdt:P686 ?Gene_Ontology_ID .
+    
+    ?cell_component rdfs:label ?cell_componentLabel . FILTER (LANG (?cell_componentLabel) = "en")
+    OPTIONAL{
+    ?article schema:about ?cell_component .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+   
+}
+  GROUP BY ?cell_component ?cell_componentLabel ?Gene_Ontology_ID ?article
+ORDER BY DESC(?ref_count)

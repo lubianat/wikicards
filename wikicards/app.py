@@ -108,21 +108,13 @@ def search_with_topic(gene_id):
     protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
     protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
 
-    protein_template = Template(
-        QUERIES.joinpath("domains_and_families.rq.jinja").read_text(encoding="UTF-8")
+    protein_result["domains"] = get_wikidata_info(
+        "domains_and_families", protein_qid=protein_qid
     )
 
-    query = protein_template.render(protein_qid=protein_qid)
-
-    protein_result["domains"] = query_wikidata(query)
-
-    protein_template = Template(
-        QUERIES.joinpath("molecular_functions.rq.jinja").read_text(encoding="UTF-8")
+    protein_result["molecular_functions"] = get_wikidata_info(
+        "molecular_functions", protein_qid=protein_qid
     )
-
-    query = protein_template.render(protein_qid=protein_qid)
-
-    protein_result["molecular_functions"] = query_wikidata(query)
 
     web_page = render_template(
         "public/gene.html",
@@ -141,3 +133,17 @@ def search_with_topic(gene_id):
         flags=0,
     )
     return web_page
+
+
+def get_wikidata_info(query_name, protein_qid):
+    """
+    Retrieves info from Wikidata based on a query name.
+    """
+
+    template = Template(
+        QUERIES.joinpath(f"{query_name}.rq.jinja").read_text(encoding="UTF-8")
+    )
+
+    query = template.render(protein_qid=protein_qid)
+
+    return query_wikidata(query)
