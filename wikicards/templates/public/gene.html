@@ -70,22 +70,18 @@ Gene
     $('#data').DataTable({
       pageLength: 5,
     });
-  });
 
-  $(document).ready(function () {
     $('#data2').DataTable({
       pageLength: 5,
     });
-  });
 
-  $(document).ready(function () {
     $('#go_cell_components_table').DataTable({
       pageLength: 5,
     });
   });
 </script>
 {% else %}
-<div class="row container">
+<div class="row contasiner">
   <h4>Select a gene</h4>
   </br>
 </div>
@@ -114,11 +110,7 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: {
-        {
-          genes | safe
-        }
-      },
+      options: {{  genes | safe }},
     });
   </script>
 

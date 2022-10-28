@@ -101,6 +101,7 @@ def search_with_topic(gene_id):
     query = protein_template.render(protein_qid=protein_qid)
 
     protein_result = query_wikidata(query)[0]
+
     uniprot_info = get_uniprot_info(protein_result["UniProt_protein_ID"])
     protein_result["pdb_ids"] = [
         {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")

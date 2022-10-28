@@ -27,13 +27,18 @@ def get_uniprot_info(uniprot_id):
     uniprot_dict = xmltodict.parse(r.text)
     uniprot_info = {}
     uniprot_info["ptm_info"] = []
+    uniprot_info["domain_info"] = []
+
     uniprot_info["function_info"] = []
 
     for i in uniprot_dict["uniprot"]["entry"]["comment"]:
         if i["@type"] == "alternative products":
             uniprot_info["isoforms"] = i["isoform"]
         if i["@type"] == "domain":
-            uniprot_info["domain_info"] = i["text"]["#text"]
+            if "#text" in i["text"]:
+                uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
+            else:
+                uniprot_info["ptm_info"].extend(i["text"].split("."))
         if i["@type"] == "PTM":
             if "#text" in i["text"]:
                 uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
