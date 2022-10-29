@@ -99,7 +99,7 @@ Gene
 
     <form name="gene" method="POST" action="{{ url_for('gene') }}">
 
-
+      {{ gene_not_found_message|safe}}
       <label for="gene">Select a gene:</label>
       <select name="gene" class="form-control" id="gene"></select>
       <button class="btn btn-primary">Send</button>
@@ -117,7 +117,7 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: {{  genes | safe }},
+      options: {{ genes | safe }},
     });
   </script>
 

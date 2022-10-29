@@ -8,6 +8,8 @@ from flask import (
     request,
     url_for,
 )
+import logging
+
 from jinja2 import Template
 from pathlib import Path
 import urllib
@@ -49,6 +51,12 @@ def gene():
         gene = request.form["gene"]
         return redirect(f"/gene/{gene}")
 
+    all_genes = get_all_genes()
+
+    return render_template("public/gene.html", genes=all_genes)
+
+
+def get_all_genes():
     all_genes_df = wikidata2df(
         "SELECT DISTINCT ?HGNC_gene_symbol WHERE {?item wdt:P353 ?HGNC_gene_symbol}"
     )
@@ -57,8 +65,7 @@ def gene():
         all_genes.append({"name": gene})
     all_genes = json.dumps(all_genes).replace('"name"', "name")
     all_genes = all_genes.replace('"', "'")
-
-    return render_template("public/gene.html", genes=all_genes)
+    return all_genes
 
 
 @app.route("/gene/<gene_id>", methods=["GET", "POST"])
@@ -69,8 +76,16 @@ def search_with_topic(gene_id):
     )
     query = gene_template.render(target=gene_id)
 
-    wikidata_result = query_wikidata(query)[0]
+    try:
+        wikidata_result = query_wikidata(query)[0]
+    except IndexError:
+        all_genes = get_all_genes()
 
+        return render_template(
+            "public/gene.html",
+            genes=all_genes,
+            gene_not_found_message=f'<div class="alert alert-warning" role="alert">No results found for "{gene_id}", try another.</div>',
+        )
     ids = {
         "wikidata": {
             "name": "Wikidata ID",
