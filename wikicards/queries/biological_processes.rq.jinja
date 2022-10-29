@@ -1,0 +1,34 @@
+SELECT
+?biological_process ?biological_processLabel ?Gene_Ontology_ID
+(SAMPLE(CONCAT("PubMed:",?pmid)) AS ?sample_pmid)
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+(GROUP_CONCAT(DISTINCT?methodLabel;SEPARATOR=", ") AS ?evidence)
+(COUNT(DISTINCT ?pmid) as ?ref_count)
+WHERE {
+
+    VALUES ?protein { wd:{{protein_qid}} } .   
+
+    ?protein p:P682 [ps:P682 ?biological_process ;
+                     pq:P459 ?method ;
+                     prov:wasDerivedFrom ?refnode ] . 
+  
+    OPTIONAL{?refnode   pr:P248 ?ref  .
+            ?ref wdt:P698 ?pmid .
+            
+            } . 
+    
+    ?method rdfs:label ?methodLabel . FILTER (LANG (?methodLabel) = "en")
+  
+    ?biological_process wdt:P686 ?Gene_Ontology_ID .
+    
+    ?biological_process rdfs:label ?biological_processLabel . FILTER (LANG (?biological_processLabel) = "en")
+    OPTIONAL{
+    ?article schema:about ?biological_process .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+   
+}
+  GROUP BY ?biological_process ?biological_processLabel ?Gene_Ontology_ID ?article
+ORDER BY DESC(?ref_count)

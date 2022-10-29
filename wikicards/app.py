@@ -121,6 +121,10 @@ def search_with_topic(gene_id):
         "cell_components", protein_qid=protein_qid
     )
 
+    protein_result["biological_processes"] = get_wikidata_info(
+        "biological_processes", protein_qid=protein_qid
+    )
+
     protein_result["swissbiopics_list"] = ",".join(
         [
             a["Gene_Ontology_ID"].split(":")[-1]

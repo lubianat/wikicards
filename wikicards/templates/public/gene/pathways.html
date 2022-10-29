@@ -1,0 +1,46 @@
+<!-- Pathways -->
+<div class="container" id="pathways">
+  <div class="card">
+    <div class="card-header">
+      <a class="btn btn-primary" data-toggle="collapse" href="#collapsePathways" role="button" aria-expanded="false"
+        aria-controls="collapsePathways">
+        <h2> Pathways for {{wikidata_result.geneLabel}} </h2>
+      </a>
+    </div>
+    <div class="collapse" id="collapsePathways">
+      <div class="card-body">
+
+        <h3>Gene Ontology Biological Processes</h3>
+        <table id="go_biological_processs_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Gene Ontology ID</th>
+              <th>Wikidata Label</th>
+              <th>GO Evidence Codes</th>
+              <th>Sample article</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for biological_process in protein_result.biological_processes %}
+            <tr>
+              <td>
+                <a target="_blank"
+                  href="http://amigo.geneontology.org/amigo/term/{{ biological_process.Gene_Ontology_ID }}">{{ biological_process.Gene_Ontology_ID }}</a>
+              </td>
+              <td>{{biological_process.biological_processLabel }}</td>
+              <td>{{biological_process.evidence}}</td>
+              <td>{{biological_process.sample_pmid}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <p>
+          Skipped:Subcellular locations from UniProtKB/Swiss-Prot, Subcellular locations from the Human Protein Atlas
+          (HPA) , qualifiers for GO terms
+        </p>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+</div>
