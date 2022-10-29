@@ -2,9 +2,13 @@
 <div class="container" id="domains">
   <div class="card">
     <div class="card-header">
-      <h2> Domains for {{wikidata_result.geneLabel}} </h2>
+      <a class="btn btn-primary" data-toggle="collapse" href="#collapseDomains" role="button" aria-expanded="false"
+        aria-controls="collapseDomains">
+        <h2> Domains for {{wikidata_result.geneLabel}} </h2>
+      </a>
     </div>
-    <div class="card-body">
+    <div class="collapse" id="collapseDomains">
+
       <h3> InterPro Domains</h3>
       {% for domain in protein_result.domains %}
       <p><a href="https://www.ebi.ac.uk/interpro/entry/InterPro/{{domain.InterPro_ID}}"
@@ -21,6 +25,6 @@
       <p>Skipped: Gene Families from HPA, Suggested Antigen Peptide Sequences, Genes that share domains</p>
 
     </div>
-
-  </div><!-- /.row -->
+  </div>
+</div><!-- /.row -->
 </div>

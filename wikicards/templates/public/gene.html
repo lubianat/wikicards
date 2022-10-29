@@ -82,7 +82,6 @@ Gene
 </script>
 {% else %}
 <div class="row contasiner">
-  <h4>Select a gene</h4>
   </br>
 </div>
 <div>
@@ -90,10 +89,8 @@ Gene
 
     <form name="gene" method="POST" action="{{ url_for('gene') }}">
 
-      <title>selectize</title>
 
-
-      <label for="gene">Selectize</label>
+      <label for="gene">Select a gene:</label>
       <select name="gene" class="form-control" id="gene"></select>
       <button class="btn btn-primary">Send</button>
 

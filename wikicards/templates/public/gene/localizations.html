@@ -2,69 +2,75 @@
 <div class="container" id="localizations">
   <div class="card">
     <div class="card-header">
-      <h2>Localizations for {{wikidata_result.geneLabel}}</h2>
+      <a class="btn btn-primary" data-toggle="collapse" href="#collapseLocalizations" role="button"
+        aria-expanded="false" aria-controls="collapseLocalizations">
+        <h2> Localizations for {{wikidata_result.geneLabel}} </h2>
+      </a>
     </div>
-    <div class="card-body">
-      <h3>Gene Ontology Cell Comonents via Swiss BioPics</h3>
+    <div class="collapse" id="collapseLocalizations">
+      <div class="card-body">
 
-      <!-- Display sidebar with list items -->
-      <template id="sibSwissBioPicsSlLiItem">
-        <li class="subcellular_location">
-          <a class="subcell_name"></a>
-          <span class="subcell_description"></span>
-        </li>
-      </template>
+        <h3>Gene Ontology Cell Comonents via Swiss BioPics</h3>
 
-      <!-- Override default style -->
-      <template id="sibSwissBioPicsStyle">
-        <style>
-          ul>li>a {
-            font-style: oblique;
-          }
+        <!-- Display sidebar with list items -->
+        <template id="sibSwissBioPicsSlLiItem">
+          <li class="subcellular_location">
+            <a class="subcell_name"></a>
+            <span class="subcell_description"></span>
+          </li>
+        </template>
 
-          ul.notpresent li {
-            display: none;
-          }
+        <!-- Override default style -->
+        <template id="sibSwissBioPicsStyle">
+          <style>
+            ul>li>a {
+              font-style: oblique;
+            }
 
-          ul.notpresent li>.subcell_description {
-            display: none;
-          }
-        </style>
-      </template>
+            ul.notpresent li {
+              display: none;
+            }
 
-      <sib-swissbiopics-sl taxid="9606" gos="{{protein_result.swissbiopics_list}}"></sib-swissbiopics-sl>
-      Rendered using <a href="https://www.swissbiopics.org">SwissBioPics</a>
+            ul.notpresent li>.subcell_description {
+              display: none;
+            }
+          </style>
+        </template>
 
-      <h3>Gene Ontology Cell Components</h3>
-      <table id="go_cell_components_table" class="table table-striped">
-        <thead>
-          <tr>
-            <th>Gene Ontology ID</th>
-            <th>Wikidata Label</th>
-            <th>GO Evidence Codes</th>
-            <th>Sample article</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for cell_component in protein_result.cell_components %}
-          <tr>
-            <td>
-              <a target="_blank"
-                href="http://amigo.geneontology.org/amigo/term/{{ cell_component.Gene_Ontology_ID }}">{{ cell_component.Gene_Ontology_ID }}</a>
-            </td>
-            <td>{{cell_component.cell_componentLabel }}</td>
-            <td>{{cell_component.evidence}}</td>
-            <td>{{cell_component.sample_pmid}}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <sib-swissbiopics-sl taxid="9606" gos="{{protein_result.swissbiopics_list}}"></sib-swissbiopics-sl>
+        Rendered using <a href="https://www.swissbiopics.org">SwissBioPics</a>
 
-      <p>
-        Skipped:Subcellular locations from UniProtKB/Swiss-Prot, Subcellular locations from the Human Protein Atlas
-        (HPA) , qualifiers for GO terms
-      </p>
+        <h3>Gene Ontology Cell Components</h3>
+        <table id="go_cell_components_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Gene Ontology ID</th>
+              <th>Wikidata Label</th>
+              <th>GO Evidence Codes</th>
+              <th>Sample article</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cell_component in protein_result.cell_components %}
+            <tr>
+              <td>
+                <a target="_blank"
+                  href="http://amigo.geneontology.org/amigo/term/{{ cell_component.Gene_Ontology_ID }}">{{ cell_component.Gene_Ontology_ID }}</a>
+              </td>
+              <td>{{cell_component.cell_componentLabel }}</td>
+              <td>{{cell_component.evidence}}</td>
+              <td>{{cell_component.sample_pmid}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <p>
+          Skipped:Subcellular locations from UniProtKB/Swiss-Prot, Subcellular locations from the Human Protein Atlas
+          (HPA) , qualifiers for GO terms
+        </p>
+      </div>
     </div>
+    <!-- /.row -->
   </div>
-  <!-- /.row -->
 </div>

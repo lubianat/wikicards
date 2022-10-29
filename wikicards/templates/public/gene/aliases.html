@@ -2,18 +2,24 @@
 <div class="container" id="aliases">
   <div class="card">
     <div class="card-header">
-
-      <h2> Aliases for {{wikidata_result.geneLabel}} </h2>
+      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+        aria-controls="collapseExample">
+        <h2> Aliases for {{wikidata_result.geneLabel}} </h2>
+      </a>
     </div>
-    <div class="card-body">
-      <h3> Aliases</h3>
+    <div class="collapse" id="collapseExample">
 
-      <p>{{wikidata_result.geneAltLabel}}</p>
+      <div class="card-body">
+        <h3> Aliases</h3>
 
-      <h3> External IDs</h3>
-      {% for id, value in ids.items() %}
-      <p>{{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a></p>
-      {% endfor %}
+        <p>{{wikidata_result.geneAltLabel}}</p>
+
+        <h3> External IDs</h3>
+        {% for id, value in ids.items() %}
+        <p>{{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a></p>
+        {% endfor %}
+      </div>
     </div>
-  </div><!-- /.row -->
+  </div>
+</div><!-- /.row -->
 </div>
