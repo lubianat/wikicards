@@ -73,21 +73,14 @@ Gene
 
 <script>
   $(document).ready(function () {
-    $('#data').DataTable({
-      pageLength: 5,
-    });
 
-    $('#data2').DataTable({
-      pageLength: 5,
-    });
-
-    $('#go_biological_processs_table').DataTable({
-      pageLength: 5,
-    });
-
-    $('#go_cell_components_table').DataTable({
-      pageLength: 5,
-    });
+    var myStringArray = ["#data", "#data2", "#go_biological_processs_table", "#go_cell_components_table", "#wikipathways_table", ""];
+    var arrayLength = myStringArray.length;
+    for (var i = 0; i < arrayLength; i++) {
+      $(myStringArray[i]).DataTable({
+        pageLength: 5,
+      });
+    }
   });
 </script>
 {% else %}
@@ -117,7 +110,11 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: {{ genes | safe }},
+      options: {
+        {
+          genes | safe
+        }
+      },
     });
   </script>
 

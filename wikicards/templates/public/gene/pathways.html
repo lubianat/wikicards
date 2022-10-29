@@ -34,10 +34,28 @@
             {% endfor %}
           </tbody>
         </table>
-
+        <h3>WikiPathways</h3>
+        <table id="wikipathways_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>WikiPathways ID</th>
+              <th>Wikidata Label</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pathway in protein_result.wikipathways %}
+            <tr>
+              <td>
+                <a target="_blank"
+                  href="https://www.wikipathways.org/index.php/Pathway:{{ pathway.WikiPathways_ID }}">{{ pathway.WikiPathways_ID }}</a>
+              </td>
+              <td>{{pathway.pathwayLabel }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <p>
-          Skipped:Subcellular locations from UniProtKB/Swiss-Prot, Subcellular locations from the Human Protein Atlas
-          (HPA) , qualifiers for GO terms
+          Skipped: PathCards super pathways, Pathways by Sino, Pathways by Boster
         </p>
       </div>
     </div>

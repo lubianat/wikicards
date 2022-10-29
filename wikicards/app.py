@@ -140,6 +140,10 @@ def search_with_topic(gene_id):
         "biological_processes", protein_qid=protein_qid
     )
 
+    protein_result["wikipathways"] = get_wikidata_info(
+        "wikipathways", protein_qid=protein_qid
+    )
+
     protein_result["swissbiopics_list"] = ",".join(
         [
             a["Gene_Ontology_ID"].split(":")[-1]

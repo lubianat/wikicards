@@ -1,0 +1,14 @@
+SELECT
+?pathway ?pathwayLabel ?WikiPathways_ID
+WHERE {
+
+    VALUES ?protein { wd:Q283350  } .    
+    ?gene wdt:P688 ?protein . 
+    ?pathway wdt:P527 ?gene . 
+
+    ?pathway wdt:P2410 ?WikiPathways_ID .
+  
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+   
+}
+
