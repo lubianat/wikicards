@@ -80,8 +80,15 @@
         <p>Pathway Commons: <a target="_blank"
             href="https://apps.pathwaycommons.org/search?q={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
         </p>
-        <p>
-          Skipped: PathCards super pathways, Pathways by: Sino, Boster, PubChem, PharmGKB, GeneGo (Thomson Reuters), R&D
+
+        <h2> STRINGDB Interaction Network</h2>
+
+        <p>From the <a
+            href="https://string-db.org/api/image/network?identifiers={{wikidata_result.geneLabel}} ">StringDB API entry
+            for {{wikidata_result.geneLabel}}.</a> </p>
+        {{stringdb_image|safe}} <p>
+          Skipped: PathCards super pathways, Pathways by: Sino, Boster, PubChem, PharmGKB, GeneGo (Thomson Reuters),
+          R&D
           Systems, Tocris, Qiagen, Cell Signaling Technology, GeneTex
 
 

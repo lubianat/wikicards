@@ -24,6 +24,22 @@ from helper import (
 from wikidata2df import wikidata2df
 from wdcuration import get_statement_values, query_wikidata
 import re
+import base64
+import io
+
+from PIL import Image
+from io import BytesIO
+
+
+def serve_pil_image(pil_img):
+
+    img_io = io.BytesIO()
+    pil_img.save(img_io, "jpeg", quality=100)
+    img_io.seek(0)
+    img = base64.b64encode(img_io.getvalue()).decode("ascii")
+    img_tag = f'<img src="data:image/jpg;base64,{img}" class="img-fluid"/>'
+    return img_tag
+
 
 HERE = Path(__file__).parent.resolve()
 QUERIES = HERE.joinpath("queries").resolve()
@@ -154,11 +170,20 @@ def search_with_topic(gene_id):
             for a in protein_result["cell_components"]
         ]
     )
+
+    r = requests.get(f"https://string-db.org/api/image/network?identifiers={gene_id}")
+
+    stringdb_image = Image.open(BytesIO(r.content))
+    stringdb_image = stringdb_image.convert("RGB")
+
+    stringdb_image = serve_pil_image(stringdb_image)
+
     web_page = render_template(
         "public/gene.html",
         wikidata_result=wikidata_result,
         protein_result=protein_result,
         uniprot_info=uniprot_info,
+        stringdb_image=stringdb_image,
         ids=ids,
         summaries=summaries,
     )
