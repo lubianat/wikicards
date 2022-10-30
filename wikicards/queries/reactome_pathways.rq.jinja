@@ -1,0 +1,14 @@
+SELECT
+?pathway ?pathwayLabel ?Reactome_ID
+WHERE {
+
+    VALUES ?protein { wd:Q283350  } .    
+
+    ?pathway wdt:P527 ?protein . 
+
+    ?pathway wdt:P3937 ?Reactome_ID .
+  
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+   
+}
+

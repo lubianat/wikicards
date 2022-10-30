@@ -54,8 +54,38 @@
             {% endfor %}
           </tbody>
         </table>
+
+        <h3>Reactome</h3>
+        <table id="reactome_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Reactome ID</th>
+              <th>Wikidata Label</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pathway in protein_result.reactome_pathways %}
+            <tr>
+              <td>
+                <a target="_blank"
+                  href="https://reactome.org/PathwayBrowser/#/{{ pathway.Reactome_ID }}">{{ pathway.Reactome_ID }}</a>
+              </td>
+              <td>{{pathway.pathwayLabel }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <h2>Additional Pathway Information</h2>
+        <p>Pathway Commons: <a target="_blank"
+            href="https://apps.pathwaycommons.org/search?q={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
+        </p>
         <p>
-          Skipped: PathCards super pathways, Pathways by Sino, Pathways by Boster
+          Skipped: PathCards super pathways, Pathways by: Sino, Boster, PubChem, PharmGKB, GeneGo (Thomson Reuters), R&D
+          Systems, Tocris, Qiagen, Cell Signaling Technology, GeneTex
+
+
+
         </p>
       </div>
     </div>

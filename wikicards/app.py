@@ -144,6 +144,10 @@ def search_with_topic(gene_id):
         "wikipathways", protein_qid=protein_qid
     )
 
+    protein_result["reactome_pathways"] = get_wikidata_info(
+        "reactome_pathways", protein_qid=protein_qid
+    )
+
     protein_result["swissbiopics_list"] = ",".join(
         [
             a["Gene_Ontology_ID"].split(":")[-1]
