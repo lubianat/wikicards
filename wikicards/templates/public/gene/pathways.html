@@ -81,6 +81,7 @@
             href="https://apps.pathwaycommons.org/search?q={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
         </p>
 
+        <h1> Interactions (physical and otherwise)</h1>
         <h2> STRINGDB Interaction Network</h2>
 
         <p>From the <a target="_blank"
@@ -88,10 +89,16 @@
             for {{wikidata_result.geneLabel}}.</a> </p>
         {{stringdb_image|safe}}
 
+        <h2>Link to SIGNOR interactions database</h2>
+        <p>SIGNOR: <a target="_blank"
+            href="http://signor.uniroma2.it/relation_result.php?id={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
+        </p>
         <p>
           Skipped: PathCards super pathways, Pathways by: Sino, Boster, PubChem, PharmGKB, GeneGo (Thomson Reuters),
           R&D
-          Systems, Tocris, Qiagen, Cell Signaling Technology, GeneTex
+          Systems, Tocris, Qiagen, Cell Signaling Technology, GeneTex, Selected Interacting proteins: P28329-CLAT_HUMAN
+          ENSP00000337103 for CHAT Gene via UniProtKB STRING IID
+          ,SIGNOR curated interactions for CHAT Gene
 
         </p>
       </div>
