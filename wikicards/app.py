@@ -164,6 +164,10 @@ def search_with_topic(gene_id):
         "reactome_pathways", protein_qid=protein_qid
     )
 
+    protein_result["protein_complexes"] = get_wikidata_info(
+        "protein_complexes", protein_qid=protein_qid
+    )
+
     protein_result["swissbiopics_list"] = ",".join(
         [
             a["Gene_Ontology_ID"].split(":")[-1]

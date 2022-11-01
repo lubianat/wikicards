@@ -51,6 +51,26 @@ Gene
       <li class="nav-item">
         <a class="nav-link" href="#pathways">Pathways</a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#drugs">Drugs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#transcripts">Transcripts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#expression">Expression</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#orthologs_and_paralogs">Orthologs and Paralogs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#variants">Variants</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#medical_condition">Medical conditions</a>
+      </li>
+
     </ul>
   </div>
 </nav>
@@ -70,11 +90,21 @@ Gene
 
 {% include 'public/gene/pathways.html' %}
 
+{% include 'public/gene/drugs.html' %}
+
+{% include 'public/gene/transcripts.html' %}
+{% include 'public/gene/expression.html' %}
+{% include 'public/gene/orthologs_and_paralogs.html' %}
+{% include 'public/gene/variants.html' %}
+{% include 'public/gene/medical_conditions.html' %}
 
 <script>
   $(document).ready(function () {
 
-    var myStringArray = ["#data", "#data2", "#go_biological_processs_table", "#go_cell_components_table", "#wikipathways_table", "#reactome_table"];
+    var myStringArray = ["#data", "#data2", "#go_biological_processs_table",
+      "#go_cell_components_table", "#wikipathways_table", "#reactome_table",
+      "#complex_portal_table"
+    ];
     var arrayLength = myStringArray.length;
     for (var i = 0; i < arrayLength; i++) {
       $(myStringArray[i]).DataTable({
@@ -110,11 +140,7 @@ Gene
       valueField: 'name',
       labelField: 'name',
       searchField: ['name', 'email'],
-      options: {
-        {
-          genes | safe
-        }
-      },
+      options: {{ genes|safe }},
     });
   </script>
 

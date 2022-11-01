@@ -81,24 +81,45 @@
             href="https://apps.pathwaycommons.org/search?q={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
         </p>
 
-        <h1> Interactions (physical and otherwise)</h1>
-        <h2> STRINGDB Interaction Network</h2>
+        <h2> Interactions (physical and otherwise)</h2>
+        <h3> STRINGDB Interaction Network</h3>
 
         <p>From the <a target="_blank"
             href="https://string-db.org/api/image/network?identifiers={{wikidata_result.geneLabel}} ">StringDB API entry
             for {{wikidata_result.geneLabel}}.</a> </p>
         {{stringdb_image|safe}}
 
-        <h2>Link to SIGNOR interactions database</h2>
+        <h3>Link to SIGNOR interactions database</h3>
         <p>SIGNOR: <a target="_blank"
             href="http://signor.uniroma2.it/relation_result.php?id={{ids.UniProt_protein_ID.symbol}}">{{ ids.UniProt_protein_ID.symbol}}</a>
         </p>
+
+        <h3>Complex Portal</h3>
+        <table id="complex_portal_table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Complex Portal ID ID</th>
+              <th>Wikidata Label</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for complex in protein_result.protein_complexes %}
+            <tr>
+              <td>
+                <a target="_blank"
+                  href="https://www.ebi.ac.uk/complexportal/complex/{{ complex.Complex_Portal_acession_ID }}">{{ complex.Complex_Portal_acession_ID }}</a>
+              </td>
+              <td>{{complex.complexLabel }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <p>
           Skipped: PathCards super pathways, Pathways by: Sino, Boster, PubChem, PharmGKB, GeneGo (Thomson Reuters),
           R&D
           Systems, Tocris, Qiagen, Cell Signaling Technology, GeneTex, Selected Interacting proteins: P28329-CLAT_HUMAN
           ENSP00000337103 for CHAT Gene via UniProtKB STRING IID
-          ,SIGNOR curated interactions for CHAT Gene
+          ,SIGNOR curated interactions,Genes that share ontologies
 
         </p>
       </div>
