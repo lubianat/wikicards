@@ -4,6 +4,7 @@ SELECT
 (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 (GROUP_CONCAT(DISTINCT ?geneAltLabel_; SEPARATOR=" | ") as ?geneAltLabel)
 
+?gene_atlas_image 
 ?cytogenetic_location
 ?genomic_start
 ?genomic_end
@@ -29,7 +30,7 @@ WHERE {
     ?gene wdt:P688 ?protein . 
     ?gene skos:altLabel ?geneAltLabel_ . 
     FILTER ( LANG( ?geneAltLabel_) = "en")
-
+    ?gene wdt:P692 ?gene_atlas_image .
 
     OPTIONAL {
       ?protein wdt:P2043 ?protein_length . 
@@ -82,3 +83,5 @@ GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?MeSH_descriptor_I
 ?genomic_end
 ?chromosome_number 
 ?protein ?proteinLabel ?protein_length ?protein_mass
+?gene_atlas_image 
+
