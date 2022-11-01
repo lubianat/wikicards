@@ -9,3 +9,4 @@ gunicorn
 flask
 pillow
 clipboard
+SPARQLWrapper
