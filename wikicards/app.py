@@ -18,25 +18,13 @@ from helper import (
     get_uniprot_info,
     get_wikipedia_summary,
     get_uniprot_info,
+    serve_pil_image,
 )
 from wikidata2df import wikidata2df
 from wdcuration import get_statement_values, query_wikidata
 import re
-import base64
-import io
-
 from PIL import Image
 from io import BytesIO
-
-
-def serve_pil_image(pil_img):
-
-    img_io = io.BytesIO()
-    pil_img.save(img_io, "jpeg", quality=100)
-    img_io.seek(0)
-    img = base64.b64encode(img_io.getvalue()).decode("ascii")
-    img_tag = f'<img src="data:image/jpg;base64,{img}" class="img-fluid"/>'
-    return img_tag
 
 
 HERE = Path(__file__).parent.resolve()
@@ -127,6 +115,8 @@ def search_with_topic(gene_id):
         QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
     )
     protein_qid = wikidata_result["protein"].split("/")[-1]
+    gene_qid = wikidata_result["gene"].split("/")[-1]
+
     query = protein_template.render(protein_qid=protein_qid)
 
     protein_result = query_wikidata(query)[0]
@@ -135,6 +125,10 @@ def search_with_topic(gene_id):
     protein_result["pdb_ids"] = [
         {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")
     ]
+
+    wikidata_result["ensembl_rna_ids"] = get_statement_values(gene_qid, "P704")
+    wikidata_result["refseq_rna_ids"] = get_statement_values(gene_qid, "P639")
+
     protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
     protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
 

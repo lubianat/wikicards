@@ -10,7 +10,27 @@
     <div class="collapse" id="collapse_transcripts">
 
       <div class="card-body">
-        <p> Skipped sessions: <strong>ALL</strong></p>
+
+        <h3> Other identifiers </h3>
+        <h4>ENSEMBL RNA IDs</h4>
+        <p>
+          {% for id in wikidata_result.ensembl_rna_ids %}
+          <a href="https://www.identifiers.org/ensemble/{{id}}" target="_blank">{{id}} </a>
+          {% endfor %}
+        </p>
+        <h4>RefSeq RNA IDs</h4>
+        <p>
+          {% for id in wikidata_result.refseq_rna_ids %}
+          <a href="https://www.ncbi.nlm.nih.gov/nuccore/{{id}}" target="_blank">{{id}} </a>
+          {% endfor %}
+        </p>
+
+
+
+        <p> Skipped sessions: NCBI additional mRNA sequence, CRISPR products,
+          miRNA and inhibitory RNA products, clone products, lentiviral particles,
+          Alternative Splicing Database (ASD) splice patterns (SP) (original database is not maintained anymore),
+          GeneLoc Exon Structure </p>
       </div>
     </div>
   </div>
