@@ -8,3 +8,4 @@ wdcuration
 gunicorn
 flask
 pillow
+clipboard
