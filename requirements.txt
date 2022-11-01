@@ -4,7 +4,7 @@ xmltodict
 jinja2
 pathlib
 wikidata2df
-wdcuration
+wdcuration==0.1.2
 gunicorn
 flask
 pillow
