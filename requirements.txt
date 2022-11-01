@@ -5,3 +5,4 @@ jinja2
 pathlib
 wikidata2df
 wdcuration
+gunicorn
