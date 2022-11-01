@@ -1,7 +1,5 @@
 from Bio import Entrez
-import urllib
 import requests
-import wikipedia
 import json
 import xmltodict
 

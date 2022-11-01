@@ -1,0 +1,7 @@
+biopython
+requests
+xmltodict
+jinja2
+pathlib
+wikidata2df
+wdcuration
