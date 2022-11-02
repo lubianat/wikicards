@@ -45,11 +45,13 @@ def get_uniprot_info(uniprot_id):
     for i in uniprot_dict["uniprot"]["entry"]["comment"]:
         if i["@type"] == "alternative products":
             uniprot_info["isoforms"] = i["isoform"]
+        if i["@type"] == "tissue specificity":
+            uniprot_info["expression"] = i["text"]["#text"]
         if i["@type"] == "domain":
             if "#text" in i["text"]:
-                uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
+                uniprot_info["domain_info"].extend(i["text"]["#text"].split("."))
             else:
-                uniprot_info["ptm_info"].extend(i["text"].split("."))
+                uniprot_info["domain_info"].extend(i["text"].split("."))
         if i["@type"] == "PTM":
             if "#text" in i["text"]:
                 uniprot_info["ptm_info"].extend(i["text"]["#text"].split("."))
@@ -61,6 +63,6 @@ def get_uniprot_info(uniprot_id):
             else:
                 uniprot_info["function_info"].extend(i["text"].split("."))
     uniprot_info["function_info"] = list(filter(None, uniprot_info["function_info"]))
-    print(uniprot_info["function_info"])
     uniprot_info["ptm_info"] = list(filter(None, uniprot_info["ptm_info"]))
+    print(uniprot_dict["uniprot"]["entry"]["comment"])
     return uniprot_info

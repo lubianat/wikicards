@@ -12,10 +12,42 @@
       <div class="card-body">
         <h2>Gene Atlas Image</h2>
         <img src="{{wikidata_result.gene_atlas_image }}">
-        See the <a target="_blank" href="https://www.wikidata.org/{{wikidata_result.gene}}">Wikidata</a> page for links
-        to Wikimedia Commons and licensing details.
-        <p> Skipped sessions: mRNA expression in normal human tissues from GTEx, Illumina, BioGPS, and SAGE for TP53
-          Gene, mRNA expression in embryonic tissues and stem cells from LifeMap Discovery </p>
+        <p>See the <a target="_blank" href="https://www.wikidata.org/{{wikidata_result.gene}}">Wikidata</a> page for
+          links
+          to Wikimedia Commons and licensing details.</p>
+
+        <h2>Expression information from UniProt</h2>
+        <a href="https://www.uniprot.org/uniprotkb/P04637/{protein_result.UniProt_protein_ID}}/entry#expression"
+          target=" _blank">{{protein_result.UniProt_protein_ID}}</a><br>
+
+        <p> {{uniprot_info.expression}} </p>
+
+        <h2>Links to other sources</h2>
+
+        <ul>
+          <li><a href="https://bgee.org/gene/{{wikidata_result.Ensembl_gene_ID}}" target="_blank">BGEE</a></li>
+          <li><a href="https://www.ebi.ac.uk/gxa/search?geneQuery={{wikidata_result.HGNC_gene_symbol}}"
+              target="_blank">Expression
+              Atlas</a></li>
+          <li><a href="https://www.ebi.ac.uk/gxa/sc/search?symbol={{wikidata_result.HGNC_gene_symbol}}"
+              target="_blank">Single Cell
+              Expression
+              Atlas</a></li>
+          <li><a href="https://www.proteinatlas.org/{ids.Ensembl_gene_ID}}-{{wikidata_result.HGNC_gene_symbol}}"
+              target="_blank">Human
+              Protein Atlas</a></li>
+        </ul>
+
+        <p> Skipped sessions: mRNA expression in normal human tissues from GTEx, Illumina, BioGPS, and SAGE
+          Gene, mRNA expression in embryonic tissues and stem cells from LifeMap Discovery, Protein differential
+          expression in normal tissues from HIPED, Integrated Proteomics: protein expression in normal tissues and cell
+          lines from ProteomicsDB, MaxQB, and MOPED, Protein tissue co-expression partners, Transcriptomic regulation
+          report from SPP (The Signaling Pathways Project), SOURCE GeneReport for Unigene cluster (identifier not in
+          Wikidata), Evidence on tissue expression from TISSUES, Phenotype-based relationships between genes and organs
+          from Gene ORGANizer, products for research.
+
+
+        </p>
       </div>
     </div>
   </div>
