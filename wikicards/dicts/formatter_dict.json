@@ -262,6 +262,7 @@
     "Microlepidoptera.nl_ID": "https://www.microvlinders.nl/soorten/species.php?speciescode=$1&p=1",
     "Microsoft_Academic_ID": "https://web.archive.org/web/*/https://academic.microsoft.com/v2/detail/$1",
     "Microworld_ID": "https://www.arcella.nl/$1/",
+    "MonDO_ID":"http://www.bioregistry.io/$1",
     "Montana_Field_Guide_species_ID": "http://fieldguide.mt.gov/speciesDetail.aspx?elcode=$1",
     "Monumental_Trees_ID": "https://www.monumentaltrees.com/en/$1/",
     "Moose_Deutschland_ID": "http://www.moose-deutschland.de/organismen/$1",

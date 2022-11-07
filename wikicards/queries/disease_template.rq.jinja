@@ -17,14 +17,21 @@ SELECT
     
 (GROUP_CONCAT(DISTINCT ?National_Cancer_Institute_ID_; SEPARATOR=", ") as ?National_Cancer_Institute_ID)
 (GROUP_CONCAT(DISTINCT ?Orphanet_ID_; SEPARATOR=", ") as ?Orphanet_ID)
+
 (GROUP_CONCAT(DISTINCT ?GARD_rare_disease_ID_; SEPARATOR=", ") as ?GARD_rare_disease_ID)
 (GROUP_CONCAT(DISTINCT ?Sjukv_rdsr_dgivningen_Category_ID_; SEPARATOR=", ") as ?Sjukv_rdsr_dgivningen_Category_ID)
-(GROUP_CONCAT(DISTINCT ?MonDO_ID_; SEPARATOR=", ") as ?MonDO_ID)
+(GROUP_CONCAT(DISTINCT ?DiseasesDB_; SEPARATOR=", ") as ?DiseasesDB)
 (GROUP_CONCAT(DISTINCT ?KEGG_ID_; SEPARATOR=", ") as ?KEGG_ID)
+(GROUP_CONCAT(DISTINCT ?Disease_Ontology_ID_; SEPARATOR=", ") as ?Disease_Ontology_ID)
 (GROUP_CONCAT(DISTINCT ?PharmGKB_ID_; SEPARATOR=", ") as ?PharmGKB_ID)
 (GROUP_CONCAT(DISTINCT ?Cochrane_concept_ID_; SEPARATOR=", ") as ?Cochrane_concept_ID)
-(GROUP_CONCAT(DISTINCT ?Haz_Map_ID_; SEPARATOR=", ") as ?Haz_Map_ID)
 
+?MonDO_ID
+?ICD_10_CM
+?ICD_11_foundation
+?OMIM_ID
+?NHS_Health_A_to_Z_ID
+?Haz_Map_ID
 
 (GROUP_CONCAT(DISTINCT ?diseaseAltLabel_; SEPARATOR=" | ") as ?diseaseAltLabel)
 
@@ -112,16 +119,30 @@ WHERE {
 # String properties
     
 
-# IDs and their formatter URLs
+# IDs 
     OPTIONAL { ?disease wdt:P1395 ?National_Cancer_Institute_ID_ . } .    
     OPTIONAL { ?disease wdt:P1550 ?Orphanet_ID_ . } .    
     OPTIONAL { ?disease wdt:P4317 ?GARD_rare_disease_ID_ . } .    
     OPTIONAL { ?disease wdt:P4670 ?Sjukv_rdsr_dgivningen_Category_ID_ . } .    
-    OPTIONAL { ?disease wdt:P5270 ?MonDO_ID_ . } .    
+    OPTIONAL { ?disease wdt:P557 ?DiseasesDB_ . } .    
     OPTIONAL { ?disease wdt:P665 ?KEGG_ID_ . } .    
+    OPTIONAL { ?disease wdt:P699 ?Disease_Ontology_ID_ . } .    
     OPTIONAL { ?disease wdt:P7001 ?PharmGKB_ID_ . } .    
-    OPTIONAL { ?disease wdt:P7647 ?Cochrane_concept_ID_ . } .    
-    OPTIONAL { ?disease wdt:P7999 ?Haz_Map_ID_ . } .    
+    OPTIONAL { ?disease wdt:P7647 ?Cochrane_concept_ID_ . } .  
+
+    OPTIONAL { ?disease wdt:P4229 ?ICD_10_CM . } .    
+    OPTIONAL { ?disease wdt:P7807 ?ICD_11__foundation . } .    
+    OPTIONAL { ?disease wdt:P7995 ?NHS_Health_A_to_Z_ID . } .    
+    OPTIONAL { ?disease wdt:P7999 ?Haz_Map_ID . } .    
     
+    OPTIONAL { ?disease wdt:P492 ?OMIM_ID . } .    
+    OPTIONAL { ?disease wdt:P5270 ?MonDO_ID . } .   
 }
 GROUP BY ?disease ?diseaseLabel ?article
+
+?MonDO_ID
+?ICD_10_CM
+?ICD_11_foundation
+?OMIM_ID
+?NHS_Health_A_to_Z_ID
+?Haz_Map_ID

@@ -115,7 +115,7 @@ def particular_disease(disease_qid):
         return render_template(
             "public/disease.html",
             diseases=all_diseases,
-            disease_not_found_message=f'<div class="alert alert-warning" role="alert">No results found for "{disease_qid}", try another.</div>',
+            disease_not_found_message=f'<div class="alert alert-warning" role="alert">No results found", try another.</div>',
         )
     ids = {
         "wikidata": {
@@ -126,8 +126,13 @@ def particular_disease(disease_qid):
     }
     # Note that one "value" comes from Wikidata and the other is the value of the "value" key
     for key, value in wikidata_result.items():
+        print(key)
+        print(value)
+
         if key in FORMATTER_DICT:
             if value != "" and "," not in value:
+                print(key)
+                print(value)
                 name = key.replace("_", " ")
 
                 ids[key] = {
