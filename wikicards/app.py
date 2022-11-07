@@ -58,6 +58,18 @@ def gene():
     return render_template("public/gene.html", genes=all_genes)
 
 
+@app.route("/disease", methods=["GET", "POST"])
+def disease():
+    if request.method == "POST":
+        print(request.form)
+        disease = request.form["disease"]
+        return redirect(f"/disease/{disease}")
+
+    all_diseases = get_all_diseases()
+
+    return render_template("public/disease.html", diseases=all_diseases)
+
+
 def get_all_genes():
     all_genes_df = wikidata2df(
         "SELECT DISTINCT ?HGNC_gene_symbol WHERE {?item wdt:P353 ?HGNC_gene_symbol}"
@@ -68,6 +80,80 @@ def get_all_genes():
     all_genes = json.dumps(all_genes).replace('"name"', "name")
     all_genes = all_genes.replace('"', "'")
     return all_genes
+
+
+def get_all_diseases():
+    query = (
+        "SELECT DISTINCT ?itemLabel"
+        '  (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) '
+        " WHERE {?item wdt:P31 wd:Q112193867 . "
+        "?item rdfs:label ?itemLabel . "
+        "FILTER (LANG (?itemLabel) = 'en') }"
+    )
+    print(query)
+    all_diseases_df = wikidata2df(query)
+    all_diseases = []
+    for _, row in all_diseases_df.iterrows():
+        all_diseases.append({"name": row["itemLabel"], "id": row["qid"]})
+    all_diseases = json.dumps(all_diseases).replace('"name"', "name")
+    return all_diseases
+
+
+@app.route("/disease/<disease_qid>", methods=["GET", "POST"])
+def particular_disease(disease_qid):
+
+    disease_template = Template(
+        QUERIES.joinpath("disease_template.rq.jinja").read_text(encoding="UTF-8")
+    )
+    query = disease_template.render(target=disease_qid)
+
+    try:
+        wikidata_result = query_wikidata(query)[0]
+    except IndexError:
+        all_diseases = get_all_diseases()
+
+        return render_template(
+            "public/disease.html",
+            diseases=all_diseases,
+            disease_not_found_message=f'<div class="alert alert-warning" role="alert">No results found for "{disease_qid}", try another.</div>',
+        )
+    ids = {
+        "wikidata": {
+            "name": "Wikidata ID",
+            "symbol": disease_qid,
+            "url": f"https://wikidata.org/wiki/{disease_qid}",
+        }
+    }
+    # Note that one "value" comes from Wikidata and the other is the value of the "value" key
+    for key, value in wikidata_result.items():
+        if key in FORMATTER_DICT:
+            if value != "" and "," not in value:
+                name = key.replace("_", " ")
+
+                ids[key] = {
+                    "name": name,
+                    "symbol": value,
+                    "url": FORMATTER_DICT[key].replace("$1", value),
+                }
+
+    summaries = {}
+    summaries["wikipedia"] = get_wikipedia_summary(wikidata_result["en_wiki_label"])
+
+    web_page = render_template(
+        "public/disease.html",
+        wikidata_result=wikidata_result,
+        ids=ids,
+        summaries=summaries,
+    )
+
+    web_page = re.sub(
+        "PubMed:([0-9]*)",
+        '<a href="https://pubmed.ncbi.nlm.nih.gov/\\1" target=" _blank">PMID:\\1</a>',
+        web_page,
+        count=0,
+        flags=0,
+    )
+    return web_page
 
 
 @app.route("/gene/<gene_id>", methods=["GET", "POST"])

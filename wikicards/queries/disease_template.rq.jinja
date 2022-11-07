@@ -1,0 +1,127 @@
+SELECT
+    
+(GROUP_CONCAT(DISTINCT ?disease_transmission_processLabel_; SEPARATOR=", ") as ?disease_transmission_process)
+(GROUP_CONCAT(DISTINCT ?mode_of_inheritanceLabel_; SEPARATOR=", ") as ?mode_of_inheritance)
+(GROUP_CONCAT(DISTINCT ?health_specialtyLabel_; SEPARATOR=", ") as ?health_specialty)
+(GROUP_CONCAT(DISTINCT ?diseasetic_associationLabel_; SEPARATOR=", ") as ?diseasetic_association)
+(GROUP_CONCAT(DISTINCT ?risk_factorLabel_; SEPARATOR=", ") as ?risk_factor)
+(GROUP_CONCAT(DISTINCT ?comorbidityLabel_; SEPARATOR=", ") as ?comorbidity)
+(GROUP_CONCAT(DISTINCT ?medical_examinationLabel_; SEPARATOR=", ") as ?medical_examination) 
+
+    
+(GROUP_CONCAT(DISTINCT ?maximal_incubation_period_in_humans_; SEPARATOR=", ") as ?maximal_incubation_period_in_humans)
+(GROUP_CONCAT(DISTINCT ?minimal_incubation_period_in_humans_; SEPARATOR=", ") as ?minimal_incubation_period_in_humans)
+
+    
+
+    
+(GROUP_CONCAT(DISTINCT ?National_Cancer_Institute_ID_; SEPARATOR=", ") as ?National_Cancer_Institute_ID)
+(GROUP_CONCAT(DISTINCT ?Orphanet_ID_; SEPARATOR=", ") as ?Orphanet_ID)
+(GROUP_CONCAT(DISTINCT ?GARD_rare_disease_ID_; SEPARATOR=", ") as ?GARD_rare_disease_ID)
+(GROUP_CONCAT(DISTINCT ?Sjukv_rdsr_dgivningen_Category_ID_; SEPARATOR=", ") as ?Sjukv_rdsr_dgivningen_Category_ID)
+(GROUP_CONCAT(DISTINCT ?MonDO_ID_; SEPARATOR=", ") as ?MonDO_ID)
+(GROUP_CONCAT(DISTINCT ?KEGG_ID_; SEPARATOR=", ") as ?KEGG_ID)
+(GROUP_CONCAT(DISTINCT ?PharmGKB_ID_; SEPARATOR=", ") as ?PharmGKB_ID)
+(GROUP_CONCAT(DISTINCT ?Cochrane_concept_ID_; SEPARATOR=", ") as ?Cochrane_concept_ID)
+(GROUP_CONCAT(DISTINCT ?Haz_Map_ID_; SEPARATOR=", ") as ?Haz_Map_ID)
+
+
+(GROUP_CONCAT(DISTINCT ?diseaseAltLabel_; SEPARATOR=" | ") as ?diseaseAltLabel)
+
+?disease ?diseaseLabel
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+
+
+WHERE {
+
+    VALUES ?disease { wd:{{target}} } .
+
+    ?disease rdfs:label ?diseaseLabel . 
+    FILTER ( LANG( ?diseaseLabel) = "en")
+
+
+    ?disease skos:altLabel ?diseaseAltLabel_ . 
+    FILTER ( LANG( ?diseaseAltLabel_) = "en")
+
+
+    OPTIONAL{
+    ?article schema:about ?disease .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+# Item properties
+
+    OPTIONAL { 
+        ?disease wdt:P1060 ?disease_transmission_process .
+        ?disease_transmission_process rdfs:label ?disease_transmission_processLabel_ .
+        FILTER(LANG(?disease_transmission_processLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P1199 ?mode_of_inheritance .
+        ?mode_of_inheritance rdfs:label ?mode_of_inheritanceLabel_ .
+        FILTER(LANG(?mode_of_inheritanceLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P1995 ?health_specialty .
+        ?health_specialty rdfs:label ?health_specialtyLabel_ .
+        FILTER(LANG(?health_specialtyLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P2293 ?diseasetic_association .
+        ?diseasetic_association rdfs:label ?diseasetic_associationLabel_ .
+        FILTER(LANG(?diseasetic_associationLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P5642 ?risk_factor .
+        ?risk_factor rdfs:label ?risk_factorLabel_ .
+        FILTER(LANG(?risk_factorLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P7500 ?comorbidity .
+        ?comorbidity rdfs:label ?comorbidityLabel_ .
+        FILTER(LANG(?comorbidityLabel_) = "en") 
+        } .    
+    OPTIONAL { 
+        ?disease wdt:P923 ?medical_examination .
+        ?medical_examination rdfs:label ?medical_examinationLabel_ .
+        FILTER(LANG(?medical_examinationLabel_) = "en") 
+        } .    
+    
+# Quantity properties
+    
+    OPTIONAL { ?disease p:P3487 ?statement_P3487  .    
+    ?statement_P3487       psv:P3487    ?valuenode_P3487 .
+    ?valuenode_P3487    wikibase:quantityAmount     ?value_P3487 .
+    ?valuenode_P3487     wikibase:quantityUnit  ?unit_P3487 .
+    ?unit_P3487 rdfs:label ?unit_P3487Label_. 
+    FILTER(LANG(?unit_P3487Label_)="en")
+    BIND(IF(?unit_P3487 = wd:Q199, "", ?unit_P3487Label_) as ?unit_P3487Label)       
+    BIND(CONCAT(STR(?value_P3487), " ",  STR(?unit_P3487Label)) as ?maximal_incubation_period_in_humans_ )
+    }
+    OPTIONAL { ?disease p:P3488 ?statement_P3488  .    
+    ?statement_P3488       psv:P3488    ?valuenode_P3488 .
+    ?valuenode_P3488    wikibase:quantityAmount     ?value_P3488 .
+    ?valuenode_P3488     wikibase:quantityUnit  ?unit_P3488 .
+    ?unit_P3488 rdfs:label ?unit_P3488Label_. 
+    FILTER(LANG(?unit_P3488Label_)="en")
+    BIND(IF(?unit_P3488 = wd:Q199, "", ?unit_P3488Label_) as ?unit_P3488Label)       
+    BIND(CONCAT(STR(?value_P3488), " ",  STR(?unit_P3488Label)) as ?minimal_incubation_period_in_humans_ )
+    }
+
+# String properties
+    
+
+# IDs and their formatter URLs
+    OPTIONAL { ?disease wdt:P1395 ?National_Cancer_Institute_ID_ . } .    
+    OPTIONAL { ?disease wdt:P1550 ?Orphanet_ID_ . } .    
+    OPTIONAL { ?disease wdt:P4317 ?GARD_rare_disease_ID_ . } .    
+    OPTIONAL { ?disease wdt:P4670 ?Sjukv_rdsr_dgivningen_Category_ID_ . } .    
+    OPTIONAL { ?disease wdt:P5270 ?MonDO_ID_ . } .    
+    OPTIONAL { ?disease wdt:P665 ?KEGG_ID_ . } .    
+    OPTIONAL { ?disease wdt:P7001 ?PharmGKB_ID_ . } .    
+    OPTIONAL { ?disease wdt:P7647 ?Cochrane_concept_ID_ . } .    
+    OPTIONAL { ?disease wdt:P7999 ?Haz_Map_ID_ . } .    
+    
+}
+GROUP BY ?disease ?diseaseLabel ?article
