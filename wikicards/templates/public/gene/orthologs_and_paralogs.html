@@ -8,9 +8,27 @@
       </a>
     </div>
     <div class="collapse" id="collapse_orthologs_and_paralogs">
+      <h2> Orthologs via Wikidata </h2>
+      <iframe style="width: 80vw; height: 50vh; border: none;"
+        src="https://query.wikidata.org/embed.html#SELECT%20DISTINCT%20%3Fortholog%20%3ForthologLabel%20%3Ftaxon%20%3FtaxonLabel%20%0A%7B%0A%20%20%3Fgene%20wdt%3AP353%20%22{{wikidata_result.geneLabel}}%22%20.%0A%20%20%3Fgene%20p%3AP684%20%5Bps%3AP684%20%3Fortholog%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20pq%3AP703%20%3Ftaxon%20%20%5D%20.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%20%23%20Helps%20get%20the%20label%20in%20your%20language%2C%20if%20not%2C%20then%20en%20language%0A%7D%0A"
+        referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+
+      <h2> Evolutionary relations</h2>
+      <ul>
+        <li><a target="_blank" ,
+            href="https://www.ensembl.org/Homo_sapiens/Gene/Compara_Tree?db=core;g={{ids.Ensembl_gene_ID.symbol}}">
+            Ensemble Gene Tree</a></li>
+        <li><a target="_blank" , href="http://www.treefam.org/family/{{ids.Ensembl_gene_ID.symbol}}">
+            TreeFam Gene Tree</a></li>
+        <li><a target="_blank" , href="http://www.aminode.org/?gene={{wikidata_result.geneLabel}}">
+            Aminode evolutionary constrained regions</a></li>
+        <li><a target="_blank" , href="https://www.alliancegenome.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">
+            Orthologs from the Alliance of Genome Resources</a></li>
+
+      </ul>
 
       <div class="card-body">
-        <p> Skipped sessions: <strong>ALL</strong></p>
+        <p> Skipped sessions: Paralogs</p>
       </div>
     </div>
   </div>
