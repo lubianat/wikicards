@@ -22,6 +22,11 @@
 
         <p> {{uniprot_info.expression}} </p>
 
+        <h2> Cell types marked by the gene</h2>
+
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#SELECT%20DISTINCT%20%3Fcell%20%3FcellLabel%20%3Fgene%20%3FgeneLabel%20%28SAMPLE%28%3Fsource_%29%20as%20%3Fsource%29%20%28SAMPLE%28%3FsourceLabel_%29%20as%20%3FsourceLabel_%29%0AWHERE%20%0A%7B%0A%20%20%3Fgene%20wdt%3AP353%20%22{{wikidata_result.geneLabel}}%22%20.%0A%20%20%3Fcell%20p%3AP8872%20%5Bps%3AP8872%20%3Fgene%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20prov%3AwasDerivedFrom%20%5B%20pr%3AP248%20%3Fsource_%20%5D%20%20%5D%20.%0A%20%20%3Fsource_%20rdfs%3Alabel%20%3FsourceLabel_.%20%0A%20%20FILTER%20%28LANG%20%28%3FsourceLabel_%29%20%3D%20%22en%22%29%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%20%23%20Helps%20get%20the%20label%20in%20your%20language%2C%20if%20not%2C%20then%20en%20language%0A%7D%0AGROUP%20BY%20%3Fcell%20%3FcellLabel%20%3Fgene%20%3FgeneLabel%20"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
         <h2>Links to other sources</h2>
 
         <ul>
