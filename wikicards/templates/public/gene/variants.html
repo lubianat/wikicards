@@ -6,11 +6,35 @@
         aria-controls="collapse_variants">
         <h2> Variants for {{wikidata_result.geneLabel}} </h2>
       </a>
+
     </div>
+
     <div class="collapse" id="collapse_variants">
 
       <div class="card-body">
-        <p> Skipped sessions: <strong>ALL</strong></p>
+
+        <h3> Variants from Wikidata </h3>
+
+        <h3>Additional information</h3>
+
+        <ul>
+          <li><a target="_blank" href="http://www.hgmd.cf.ac.uk/ac/gene.php?gene={{wikidata_result.geneLabel}}">Human
+              Gene
+              Mutation Database (HGMD)</a></li>
+          <li><a target="_blank" href="https://www.snpedia.com/index.php/{{wikidata_result.geneLabel}}">SNPedia</a></li>
+          <li><a target="_blank"
+              href="https://databases.lovd.nl/shared/variants/{{wikidata_result.geneLabel}}/unique">Leiden Open
+              Variation
+              Database</a></li>
+
+
+        </ul>
+        <p> Skipped sessions:
+          Sequence variations, with clinical significance, from ClinVar and Humsavar, with links to dbSNP,
+          dbSNP identifiers (rs#s) for variants without ClinVar clinical significance,
+          Structural Variations from Database of Genomic Variants (DGV) (not on Wikidata),
+          Variation tolerance,
+
       </div>
     </div>
   </div>
