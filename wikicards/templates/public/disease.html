@@ -35,6 +35,7 @@ Disease
     </ul>
   </div>
 </nav>
+<br>
 {% include 'public/disease/aliases.html' %}
 
 {% include 'public/disease/summaries.html' %}
@@ -66,7 +67,7 @@ Disease
       {{ disease_not_found_message|safe}}
       <label for="disease">Select a disease:</label>
       <select name="disease" class="form-control" id="disease"></select>
-      <button class="btn btn-primary">Send</button>
+      <button class="btn btn-info btn-sm btn-block">Send</button>
 
       <br>
       <br>
@@ -81,7 +82,11 @@ Disease
       valueField: 'id',
       labelField: 'name',
       searchField: ['name', 'id'],
-      options: {{diseases | safe }},
+      options: {
+        {
+          diseases | safe
+        }
+      },
     });
   </script>
 

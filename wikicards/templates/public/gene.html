@@ -74,6 +74,7 @@ Gene
     </ul>
   </div>
 </nav>
+<br>
 {% include 'public/gene/aliases.html' %}
 
 {% include 'public/gene/summaries.html' %}
@@ -125,7 +126,7 @@ Gene
       {{ gene_not_found_message|safe}}
       <label for="gene">Select a gene:</label>
       <select name="gene" class="form-control" id="gene"></select>
-      <button class="btn btn-primary">Send</button>
+      <button class="btn btn-info btn-sm btn-block">Send</button>
 
       <br>
       <br>
