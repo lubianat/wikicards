@@ -2,8 +2,8 @@
 <div class="container" id="variants">
   <div class="card">
     <div class="card-header">
-      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapse_variants" role="button" aria-expanded="false"
-        aria-controls="collapse_variants">
+      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapse_variants" role="button"
+        aria-expanded="false" aria-controls="collapse_variants">
         <h2> Variants for {{wikidata_result.geneLabel}} </h2>
       </a>
 
@@ -14,7 +14,9 @@
       <div class="card-body">
 
         <h3> Variants from Wikidata </h3>
-
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#SELECT%20%3Fvariant%20%3FvariantLabel%20%3Fsnp%20%3Fclinvar%0AWHERE%20%0A%7B%0A%20%20%3Fgene%20wdt%3AP353%20%22{{wikidata_result.geneLabel}}%22%20.%20%0A%20%20%3Fvariant%20wdt%3AP3433%20%3Fgene%20.%0A%20%20OPTIONAL%20%7B%3Fvariant%20wdt%3AP6861%20%3Fsnp%20.%7D%20%0A%20%20OPTIONAL%20%7B%3Fvariant%20wdt%3AP1929%20%3Fclinvar%20.%20%7D%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%20%23%20Helps%20get%20the%20label%20in%20your%20language%2C%20if%20not%2C%20then%20en%20language%0A%7D%0AORDER%20BY%20DESC%28%3Fsnp%29%20DESC%28%3Fclinvar%29"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
         <h3> Additional information </h3>
 
         <ul>
