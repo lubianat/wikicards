@@ -1,0 +1,37 @@
+SELECT
+    
+?cell ?cellLabel
+(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+
+
+WHERE {
+
+    VALUES ?cell { wd:{{target}} } .
+
+    ?cell rdfs:label ?cellLabel . 
+    FILTER ( LANG( ?cellLabel) = "en")
+
+
+    ?cell skos:altLabel ?cellAltLabel_ . 
+    FILTER ( LANG( ?cellAltLabel_) = "en")
+
+
+    OPTIONAL{
+    ?article schema:about ?cell .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+# Item properties
+
+
+# Quantity properties
+
+# String properties
+    
+
+# IDs 
+ 
+}
+GROUP BY ?cell ?cellLabel ?article
+
