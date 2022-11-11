@@ -3,6 +3,9 @@ SELECT
 ?cell ?cellLabel
 (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
 
+?Brenda_Tissue_Ontology_ID
+?Cell_Ontology_ID
+?MeSH_descriptor_ID
 
 WHERE {
 
@@ -30,8 +33,9 @@ WHERE {
 # String properties
     
 
-# IDs 
- 
-}
-GROUP BY ?cell ?cellLabel ?article
+# IDs and their formatter URLs
+    OPTIONAL { ?cell wdt:P5501 ?Brenda_Tissue_Ontology_ID . } .    
+    OPTIONAL { ?cell wdt:P7963 ?Cell_Ontology_ID . } .   
+    OPTIONAL { ?cell wdt:P486 ?MeSH_descriptor_ID . } .
 
+}
