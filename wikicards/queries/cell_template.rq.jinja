@@ -1,41 +1,21 @@
-SELECT
-    
-?cell ?cellLabel
-(REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
-
-?Brenda_Tissue_Ontology_ID
-?Cell_Ontology_ID
-?MeSH_descriptor_ID
-
-WHERE {
-
-    VALUES ?cell { wd:{{target}} } .
-
-    ?cell rdfs:label ?cellLabel . 
-    FILTER ( LANG( ?cellLabel) = "en")
-
-
-    ?cell skos:altLabel ?cellAltLabel_ . 
-    FILTER ( LANG( ?cellAltLabel_) = "en")
-
-
-    OPTIONAL{
-    ?article schema:about ?cell .
-    ?article schema:inLanguage "en" .
-    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
-
-    }
-# Item properties
-
-
-# Quantity properties
-
-# String properties
-    
-
-# IDs and their formatter URLs
-    OPTIONAL { ?cell wdt:P5501 ?Brenda_Tissue_Ontology_ID . } .    
-    OPTIONAL { ?cell wdt:P7963 ?Cell_Ontology_ID . } .   
-    OPTIONAL { ?cell wdt:P486 ?MeSH_descriptor_ID . } .
-
+SELECT DISTINCT ?cell ?cellLabel (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") AS ?en_wiki_label) (GROUP_CONCAT(DISTINCT ?cellAltLabel_; SEPARATOR = " | ") AS ?cellAltLabel) ?Cell_Ontology_ID ?MeSH_descriptor_ID ?Brenda_Tissue_Ontology_ID ?Terminologia_Anatomica_98_ID ?Foundational_Model_of_Anatomy_ID ?NCI_Thesaurus_ID WHERE {
+  VALUES ?cell {
+    wd:{{target}}
+  }
+  ?cell rdfs:label ?cellLabel.
+  FILTER((LANG(?cellLabel)) = "en")
+  ?cell skos:altLabel ?cellAltLabel_.
+  FILTER((LANG(?cellAltLabel_)) = "en")
+  OPTIONAL {
+    ?article schema:about ?cell;
+      schema:inLanguage "en".
+    FILTER((SUBSTR(STR(?article), 1 , 25 )) = "https://en.wikipedia.org/")
+  }
+  OPTIONAL { ?cell wdt:P7963 ?Cell_Ontology_ID. }
+  OPTIONAL { ?cell wdt:P486 ?MeSH_descriptor_ID. }
+  OPTIONAL { ?cell wdt:P5501 ?Brenda_Tissue_Ontology_ID. }
+  OPTIONAL { ?cell wdt:P1323 ?Terminologia_Anatomica_98_ID. }
+  OPTIONAL { ?cell wdt:P1402 ?Foundational_Model_of_Anatomy_ID. }
+  OPTIONAL { ?cell wdt:P1748 ?NCI_Thesaurus_ID. }
 }
+GROUP BY ?cell ?cellLabel ?article ?Cell_Ontology_ID ?MeSH_descriptor_ID ?Brenda_Tissue_Ontology_ID ?Terminologia_Anatomica_98_ID ?Foundational_Model_of_Anatomy_ID ?NCI_Thesaurus_ID

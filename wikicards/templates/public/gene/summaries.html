@@ -2,8 +2,8 @@
 <div class="container" id="summaries">
   <div class="card">
     <div class="card-header">
-      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapseSummaries" role="button" aria-expanded="false"
-        aria-controls="collapseSummaries">
+      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapseSummaries" role="button"
+        aria-expanded="false" aria-controls="collapseSummaries">
         <h2> Summaries for {{wikidata_result.geneLabel}} </h2>
       </a>
     </div>
@@ -22,13 +22,11 @@
         <h3>Wikipedia summary</h3>
         (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label
     }}" target="_blank">link</a>) <br>
-        <img src="{{summaries.wikipedia.thumbnail.source}}" width="100">
+        <p style="float: right;"> <a href="{{summaries.wikipedia.originalimage.source}}" target="_blank">
+            <img src="{{summaries.wikipedia.originalimage.source}}" width="250"></a></p>
         {{summaries.wikipedia.extract_html|safe}}
 
         <h3>Additional information</h3>
-        {% for id, value in ids.items() %}
-        {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
-        {% endfor %}
         <a href="https://scholia.toolforge.org/gene/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
         <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a> <br>
         <a href="https://monarchinitiative.org/gene/HGNC:{{ids.HGNC_ID.symbol}}">Monarch Initiative</a> <br>

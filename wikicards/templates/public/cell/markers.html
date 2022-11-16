@@ -1,0 +1,42 @@
+<!-- SUMMARIES -->
+<div class="container" id="summaries">
+  <div class="card">
+    <div class="card-header">
+      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapse_markers" role="button"
+        aria-expanded="false" aria-controls="collapse_markers">
+        <h2> Markers for {{wikidata_result.cellLabel}} </h2>
+      </a>
+    </div>
+    <div class="collapse" id="collapse_markers">
+      <div class="card-body">
+
+
+        <h3>Markers in humans</h3>
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#SELECT%20DISTINCT%20%3Fmarker%20%3FmarkerLabel%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20<{{wikidata_result.cell}}>%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ15978631%20.%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker.%20%0A%20%20%3Fmarker%20rdfs%3Alabel%20%3FmarkerLabel%20.%20%0A%20%20FILTER%20%28LANG%20%28%3FmarkerLabel%29%20%3D%20%22en%22%29%0A%7D%0A%0A"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        <h3>Markers in mice</h3>
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#SELECT%20DISTINCT%20%3Fmarker%20%3FmarkerLabel%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20<{{wikidata_result.cell}}>%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ83310%20.%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker.%20%0A%20%20%3Fmarker%20rdfs%3Alabel%20%3FmarkerLabel%20.%20%0A%20%20FILTER%20%28LANG%20%28%3FmarkerLabel%29%20%3D%20%22en%22%29%0A%7D%0A%0A"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        {{summaries.wikipedia.extract_html|safe}}
+
+        <h3>Human diseases that share markers</h3>
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#%23titles%3A%20Diseases%20associated%20with%20pancreatic%20beta%20cells%20via%20markers%0ASELECT%20%0A%3FdiseaseLabel%20%0A%28COUNT%28DISTINCT%20%3FdiseaseGene%29%20AS%20%3Fcount%29%20%0A%28GROUP_CONCAT%28DISTINCT%20%3FgeneLabel%3B%20SEPARATOR%3D%22%2C%20%22%29%20AS%20%3Fgenes%29%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20<{{wikidata_result.cell}}>%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ15978631%20.%0A%20%20%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3FdiseaseGene%20.%20%20%20%20%23%20human%20pancreatic%20beta%20cell%20--%3E%20%20has%20marker%20--%3E%20%20gene%0A%20%20%3Fdisease%20wdt%3AP2293%20%3FdiseaseGene%20.%20%20%20%20%20%20%20%20%20%23%20disease%20--%3E%20genetic%20association%20--%3E%20gene%0A%20%20%0A%20%20wd%3AQ101405087%20rdfs%3Alabel%20%3FcellTypeLabel%20.%0A%20%20%3Fdisease%20rdfs%3Alabel%20%3FdiseaseLabel%20.%0A%20%20%3FdiseaseGene%20%20%20rdfs%3Alabel%20%3FgeneLabel%20.%0A%0A%20%20FILTER%28LANG%28%3FdiseaseLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%28LANG%28%3FgeneLabel%29%20%3D%20%22en%22%29%0A%20%20%0A%20%7D%0A%0AGROUP%20BY%20%3FdiseaseLabel%0AORDER%20BY%20DESC%28%3Fcount%29"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+
+        <h3>Cell types that share markers</h3>
+        <iframe style="width: 80vw; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#SELECT%20%0A%3Fcell_typeLabel%20%0A%28COUNT%28DISTINCT%20%3Fmarker_gene%29%20AS%20%3Fcount%29%20%0A%28GROUP_CONCAT%28DISTINCT%20%3FgeneLabel%3B%20SEPARATOR%3D%22%2C%20%22%29%20AS%20%3Fgenes%29%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20wd%3AQ43054%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ15978631%20.%0A%20%20%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker_gene%20.%20%20%20%20%0A%20%20%3Fcell_type%20wdt%3AP8872%20%3Fmarker_gene%20%20.%20%20%20%20%0A%20%20%0A%20%20%3Fcell_type%20rdfs%3Alabel%20%3Fcell_typeLabel%20.%0A%20%20%3Fmarker_gene%20rdfs%3Alabel%20%3FgeneLabel%20.%0A%0A%20%20FILTER%28LANG%28%3Fcell_typeLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%28LANG%28%3FgeneLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%20%28%20%3Fcell_type%20%21%3D%20%3Fhuman_version%20%29%0A%20%20%0A%20%7D%0A%0AGROUP%20BY%20%3Fcell_typeLabel%0AORDER%20BY%20DESC%28%3Fcount%29"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        <h3>Additional information</h3>
+        {% for id, value in ids.items() %}
+        {{value.name}}: <a href="{{value.url}}" target="_blank">{{value.symbol}} </a> <br>
+        {% endfor %}
+
+        </p>
+      </div>
+    </div><!-- /.row -->
+  </div>
+</div>
