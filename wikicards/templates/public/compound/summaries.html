@@ -1,0 +1,29 @@
+<!-- SUMMARIES -->
+<div class="container" id="summaries">
+  <div class="card">
+    <div class="card-header">
+      <a class="btn btn-info btn-sm btn-block" data-toggle="collapse" href="#collapseSummaries" role="button"
+        aria-expanded="false" aria-controls="collapseSummaries">
+        <h2> Summaries for {{wikidata_result.compoundLabel}} </h2>
+      </a>
+    </div>
+    <div class="collapse" id="collapseSummaries">
+      <div class="card-body">
+
+
+        <h3>Wikipedia summary</h3>
+        (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label
+    }}" target="_blank">link</a>) <br>
+        <p style="float: right;"> <a href="{{summaries.wikipedia.originalimage.source}}" target="_blank">
+            <img src="{{summaries.wikipedia.originalimage.source}}" width="250"></a></p>
+        {{summaries.wikipedia.extract_html|safe}}
+
+        <h3>Additional information</h3>
+        <a href="https://scholia.toolforge.org/compound/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
+
+        <p>Skipped summaries in relation to Mala Cards: <strong>ALL</strong>
+        </p>
+      </div>
+    </div><!-- /.row -->
+  </div>
+</div>

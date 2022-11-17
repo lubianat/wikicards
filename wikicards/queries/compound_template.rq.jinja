@@ -1,0 +1,86 @@
+SELECT DISTINCT
+
+    ?compound    ?compoundLabel
+    (REPLACE(STR(?article), "https://en.wikipedia.org/wiki/", "") as ?en_wiki_label)
+
+    (GROUP_CONCAT(DISTINCT ?compoundAltLabel_; SEPARATOR=" | ") as ?compoundAltLabel )      
+
+     
+
+    
+
+    
+
+    
+
+    
+    ?InChI
+    ?InChIKey
+    ?ChemSpider_ID
+    ?PubChem_CID
+    ?ChEBI_ID
+    ?ChEMBL_ID
+    ?MeSH_descriptor_ID
+    ?DrugBank_ID
+    ?UMLS_CUI
+    ?MedlinePlus_drug_identifier
+    ?MedlinePlus_ID
+WHERE {
+
+    VALUES ?compound { wd:{{target}} } .
+
+    ?compound rdfs:label ?compoundLabel . 
+
+    FILTER ( LANG( ?compoundLabel) = "en")
+
+    ?compound skos:altLabel ?compoundAltLabel_ . 
+
+    FILTER ( LANG( ?compoundAltLabel_) = "en")
+
+
+    OPTIONAL{
+    ?article schema:about ?compound .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+
+    }
+# Item properties
+
+    
+# Quantity properties
+    
+
+# String properties
+    
+
+# IDs and their formatter URLs
+    OPTIONAL { ?compound wdt:P234 ?InChI . } .    
+    OPTIONAL { ?compound wdt:P235 ?InChIKey . } .    
+    OPTIONAL { ?compound wdt:P661 ?ChemSpider_ID . } .    
+    OPTIONAL { ?compound wdt:P662 ?PubChem_CID . } .    
+    OPTIONAL { ?compound wdt:P683 ?ChEBI_ID . } .    
+    OPTIONAL { ?compound wdt:P592 ?ChEMBL_ID . } .    
+    OPTIONAL { ?compound wdt:P486 ?MeSH_descriptor_ID . } .    
+    OPTIONAL { ?compound wdt:P715 ?DrugBank_ID . } .    
+    OPTIONAL { ?compound wdt:P2892 ?UMLS_CUI . } .    
+    OPTIONAL { ?compound wdt:P10245 ?MedlinePlus_drug_identifier . } .    
+    OPTIONAL { ?compound wdt:P604 ?MedlinePlus_ID . } .    
+    
+
+    
+}
+GROUP BY 
+?compound ?compoundLabel
+?article
+
+?InChI
+?InChIKey
+?ChemSpider_ID
+?PubChem_CID
+?ChEBI_ID
+?ChEMBL_ID
+?MeSH_descriptor_ID
+?DrugBank_ID
+?UMLS_CUI
+?MedlinePlus_drug_identifier
+?MedlinePlus_ID

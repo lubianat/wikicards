@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+Compound
+{% endblock %}
+
+
+{% block main %}
+
+{% if wikidata_result %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+
+    <h1 class="display-3">{{wikidata_result.compoundLabel}}</h1>
+  </div>
+</div><!-- /.jumbotron -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top second-nav">
+  <a class="navbar-brand" href="#">Go to session</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#aliases">Aliases</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#summaries">Summaries</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+{% include 'public/compound/aliases.html' %}
+
+{% include 'public/compound/summaries.html' %}
+
+<script>
+  $(document).ready(function () {
+
+    var myStringArray = ["#data", "#data2", "#go_biological_processs_table",
+      "#go_cell_components_table", "#wikipathways_table", "#reactome_table",
+      "#complex_portal_table"
+    ];
+    var arrayLength = myStringArray.length;
+    for (var i = 0; i < arrayLength; i++) {
+      $(myStringArray[i]).DataTable({
+        pageLength: 5,
+      });
+    }
+  });
+</script>
+{% else %}
+<div class="row contasiner">
+  </br>
+</div>
+<div>
+  <div class="col-md container">
+
+    <form name="compound" method="POST" action="{{ url_for('compound') }}">
+
+      {{ compound_not_found_message|safe}}
+      <label for="compound">Select a compound:</label>
+      <select name="compound" class="form-control" id="compound"></select>
+      <button class="btn btn-info btn-sm btn-block">Send</button>
+
+      <br>
+      <br>
+      <br>
+    </form>
+  </div>
+
+  <script>
+    $('#compound').selectize({
+      delimiter: ',',
+      persist: false,
+      valueField: 'id',
+      labelField: 'name',
+      searchField: ['name', 'id'],
+      options: {{ compounds | safe }},
+    });
+  </script>
+
+</div>
+
+{% endif %}
+{% endblock %}
