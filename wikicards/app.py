@@ -13,7 +13,7 @@ from pathlib import Path
 import urllib
 import requests
 import json
-from helper import (
+from .helper import (
     get_entrez_summary,
     get_uniprot_info,
     get_wikipedia_summary,
@@ -284,13 +284,9 @@ def extract_ids(qid, wikidata_result):
     }
     # Note that one "value" comes from Wikidata and the other is the value of the "value" key
     for key, value in wikidata_result.items():
-        print(key)
-        print(value)
 
         if key in FORMATTER_DICT:
             if value != "" and "," not in value:
-                print(key)
-                print(value)
                 name = key.replace("_", " ")
 
                 ids[key] = {
@@ -369,7 +365,9 @@ def get_all_diseases():
 
 
 def get_all_compounds():
-
+    """
+    Retrieves all chemical compounds of interest from Wikidata for the Flask dropdown menu.
+    """
     query = (
         "SELECT DISTINCT ?itemLabel"
         '  (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) '
@@ -391,6 +389,7 @@ def get_all_of_a_kind_for_jinja(query):
 
 
 def get_protein_result(wikidata_result):
+    """ """
     protein_template = Template(
         QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
     )
