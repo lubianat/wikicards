@@ -17,6 +17,7 @@ from helper import (
     get_entrez_summary,
     get_uniprot_info,
     get_wikipedia_summary,
+    get_ontological_definition,
     get_uniprot_info,
     serve_pil_image,
 )
@@ -25,6 +26,32 @@ from wdcuration import get_statement_values, query_wikidata
 import re
 from PIL import Image
 from io import BytesIO
+from logging.config import dictConfig
+from flask.logging import default_handler
+
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "default",
+            },
+            "file": {
+                "class": "logging.FileHandler",
+                "filename": "flask.log",
+                "formatter": "default",
+            },
+        },
+        "root": {"level": "WARNING", "handlers": ["console", "file"]},
+    }
+)
 
 
 HERE = Path(__file__).parent.resolve()
@@ -76,8 +103,17 @@ def particular_cell(cell_qid):
     ids = extract_ids(cell_qid, wikidata_result)
 
     summaries = {}
-    summaries["wikipedia"] = get_wikipedia_summary(wikidata_result["en_wiki_label"])
+    wikipedia_data = get_wikipedia_summary(wikidata_result["en_wiki_label"])
 
+    if "originalimage" not in wikipedia_data:
+        wikipedia_data["originalimage"] = {}
+        wikipedia_data["originalimage"]["source"] = ""
+        app.logger.warning("%s has no image", wikidata_result["en_wiki_label"])
+
+    summaries["wikipedia"] = wikipedia_data
+    summaries["cell_ontology"] = get_ontological_definition(
+        ids["Cell_Ontology_ID"]["symbol"]
+    )
     web_page = render_template(
         "public/cell.html",
         wikidata_result=wikidata_result,

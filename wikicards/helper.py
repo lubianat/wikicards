@@ -7,6 +7,16 @@ import base64
 import io
 
 
+def get_ontological_definition(curie):
+    curie = curie.replace("_", ":")
+    url = f"http://biolookup.io/api/lookup/{curie}"
+    print(url)
+    r = requests.get(url)
+    data = r.json()
+    print(data)
+    return data["definition"]
+
+
 def serve_pil_image(pil_img):
 
     img_io = io.BytesIO()
@@ -29,7 +39,8 @@ def get_wikipedia_summary(page_name):
     print(page_name)
     r = requests.get(f"https://en.wikipedia.org/api/rest_v1/page/summary/{page_name}")
     print(r.text)
-    return json.loads(r.text)
+    data = json.loads(r.text)
+    return data
 
 
 def get_uniprot_info(uniprot_id):
