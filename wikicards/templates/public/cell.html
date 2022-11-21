@@ -66,8 +66,7 @@ Cell Type
 
     <form name="cell" method="POST" action="{{ url_for('cell') }}">
       <div class="form-group">
-        <label for="cell">Select a cell:</label>
-        <select name="cell" class="form-control" id="cell"></select>
+        <input name="cell" id="cell"></input>
         <button class="btn btn-info btn-sm btn-block mt-3">Send</button>
       </div>
     </form>
@@ -76,15 +75,13 @@ Cell Type
   <script>
     $('#cell').selectize({
       delimiter: ',',
+      placeholder: "Select your cell type of interest",
+      maxItems:1,
       persist: false,
       valueField: 'id',
       labelField: 'name',
       searchField: ['name', 'id'],
-      options: {
-        {
-          cells | safe
-        }
-      },
+      options: {{ cells | safe  }},
     });
   </script>
 

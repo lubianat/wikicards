@@ -124,8 +124,7 @@ Gene
     <form name="gene" method="POST" action="{{ url_for('gene') }}">
 
       {{ gene_not_found_message|safe}}
-      <label for="gene">Select a gene:</label>
-      <select name="gene" class="form-control" id="gene"></select>
+      <select name="gene"  id="gene"></select>
       <button class="btn btn-info btn-sm btn-block mt-3">Send</button>
 
       <br>
@@ -136,7 +135,10 @@ Gene
 
   <script>
     $('#gene').selectize({
+      delimiter: ',',      
       delimiter: ',',
+      placeholder: "Select your gene of interest",
+      maxItems:1,
       persist: false,
       valueField: 'name',
       labelField: 'name',

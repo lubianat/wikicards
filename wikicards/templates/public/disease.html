@@ -65,8 +65,7 @@ Disease
     <form name="disease" method="POST" action="{{ url_for('disease') }}">
 
       {{ disease_not_found_message|safe}}
-      <label for="disease">Select a disease:</label>
-      <select name="disease" class="form-control" id="disease"></select>
+      <select name="disease"  id="disease"></select>
       <button class="btn btn-info btn-sm btn-block mt-3">Send</button>
 
       <br>
@@ -79,14 +78,12 @@ Disease
     $('#disease').selectize({
       delimiter: ',',
       persist: false,
+      placeholder: "Select your disease of interest",
+      maxItems:1,
       valueField: 'id',
       labelField: 'name',
       searchField: ['name', 'id'],
-      options: {
-        {
-          diseases | safe
-        }
-      },
+      options: {{  diseases | safe     }},
     });
   </script>
 

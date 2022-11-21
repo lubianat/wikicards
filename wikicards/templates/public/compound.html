@@ -65,8 +65,7 @@ Compound
     <form name="compound" method="POST" action="{{ url_for('compound') }}">
 
       {{ compound_not_found_message|safe}}
-      <label for="compound">Select a compound:</label>
-      <select name="compound" class="form-control" id="compound"></select>
+      <select name="compound"  id="compound"></select>
       <button class="btn btn-info btn-sm btn-block mt-3">Send</button>
 
       <br>
@@ -78,6 +77,9 @@ Compound
   <script>
     $('#compound').selectize({
       delimiter: ',',
+      delimiter: ',',
+      placeholder: "Select your chemical compound of interest",
+      maxItems:1,
       persist: false,
       valueField: 'id',
       labelField: 'name',
