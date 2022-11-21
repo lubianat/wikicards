@@ -13,7 +13,7 @@ from pathlib import Path
 import urllib
 import requests
 import json
-from .helper import (
+from helper import (
     get_entrez_summary,
     get_uniprot_info,
     get_wikipedia_summary,

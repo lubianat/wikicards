@@ -62,17 +62,14 @@ Cell Type
 </div>
 <div>
   <div class="col-md container">
+    {{ cell_not_found_message|safe}}
 
     <form name="cell" method="POST" action="{{ url_for('cell') }}">
-
-      {{ cell_not_found_message|safe}}
-      <label for="cell">Select a cell:</label>
-      <select name="cell" class="form-control" id="cell"></select>
-      <button class="btn btn-info btn-sm btn-block">Send</button>
-
-      <br>
-      <br>
-      <br>
+      <div class="form-group">
+        <label for="cell">Select a cell:</label>
+        <select name="cell" class="form-control" id="cell"></select>
+        <button class="btn btn-info btn-sm btn-block mt-3">Send</button>
+      </div>
     </form>
   </div>
 
@@ -83,7 +80,11 @@ Cell Type
       valueField: 'id',
       labelField: 'name',
       searchField: ['name', 'id'],
-      options: {{cells | safe }},
+      options: {
+        {
+          cells | safe
+        }
+      },
     });
   </script>
 
