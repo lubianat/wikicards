@@ -13,16 +13,27 @@
 
         <h3>Wikipedia summary</h3>
         (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label
-    }}" target="_blank">link</a>) <br>
+    }}" target="_blank">Wikipedia page</a>) <br>
         <p style="float: right;"> <a href="{{summaries.wikipedia.originalimage.source}}" target="_blank">
             <img src="{{summaries.wikipedia.originalimage.source}}" width="250"></a></p>
         {{summaries.wikipedia.extract_html|safe}}
 
-        <h3>Additional information</h3>
-        <a href="https://scholia.toolforge.org/disease/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
+        <h3>Disease Ontology definition</h3>
+        (<a href="http://purl.obolibrary.org/obo/{{ids.Disease_Ontology_ID.symbol}}" target="_blank">link</a>) <br>
+        <p>{{summaries.disease_ontology}}
 
-        <p>Skipped summaries in relation to Mala Cards: <strong>ALL</strong>
-        </p>
+          {% if summaries.mondo %}
+          <h3>Monarch Disease Ontology definition</h3>
+          (<a href="http://purl.obolibrary.org/obo/{{ids.MonDO_ID.symbol}}" target="_blank">link</a>) <br>
+          <p>{{summaries.mondo}}
+            {% endif %}
+            <h3>Additional information</h3>
+            <a href="https://scholia.toolforge.org/disease/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
+
+
+            <p>Skipped summaries in relation to Mala Cards: <strong>ALL</strong>
+            </p>
+
       </div>
     </div><!-- /.row -->
   </div>

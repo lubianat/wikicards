@@ -16,8 +16,7 @@ SELECT
 
     
 (GROUP_CONCAT(DISTINCT ?National_Cancer_Institute_ID_; SEPARATOR=", ") as ?National_Cancer_Institute_ID)
-(GROUP_CONCAT(DISTINCT ?Orphanet_ID_; SEPARATOR=", ") as ?Orphanet_ID)
-
+?Orphanet_ID
 (GROUP_CONCAT(DISTINCT ?GARD_rare_disease_ID_; SEPARATOR=", ") as ?GARD_rare_disease_ID)
 (GROUP_CONCAT(DISTINCT ?Sjukv_rdsr_dgivningen_Category_ID_; SEPARATOR=", ") as ?Sjukv_rdsr_dgivningen_Category_ID)
 (GROUP_CONCAT(DISTINCT ?DiseasesDB_; SEPARATOR=", ") as ?DiseasesDB)
@@ -121,7 +120,7 @@ WHERE {
 
 # IDs 
     OPTIONAL { ?disease wdt:P1395 ?National_Cancer_Institute_ID_ . } .    
-    OPTIONAL { ?disease wdt:P1550 ?Orphanet_ID_ . } .    
+    OPTIONAL { ?disease wdt:P1550 ?Orphanet_ID . } .    
     OPTIONAL { ?disease wdt:P4317 ?GARD_rare_disease_ID_ . } .    
     OPTIONAL { ?disease wdt:P4670 ?Sjukv_rdsr_dgivningen_Category_ID_ . } .    
     OPTIONAL { ?disease wdt:P557 ?DiseasesDB_ . } .    
@@ -146,3 +145,4 @@ GROUP BY ?disease ?diseaseLabel ?article
 ?OMIM_ID
 ?NHS_Health_A_to_Z_ID
 ?Haz_Map_ID
+?Orphanet_ID

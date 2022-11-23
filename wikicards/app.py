@@ -198,8 +198,15 @@ def particular_disease(disease_qid):
     ids = extract_ids(disease_qid, wikidata_result)
 
     summaries = {}
-    summaries["wikipedia"] = get_wikipedia_summary(wikidata_result["en_wiki_label"])
+    if "en_wiki_label" in wikidata_result:
+        summaries["wikipedia"] = get_wikipedia_summary(wikidata_result["en_wiki_label"])
 
+    if "Disease_Ontology_ID" in wikidata_result:
+        summaries["disease_ontology"] = get_ontological_definition(
+            ids["Disease_Ontology_ID"]["symbol"]
+        )
+    if "MonDO_ID" in ids:
+        summaries["mondo"] = get_ontological_definition(ids["MonDO_ID"]["symbol"])
     web_page = render_template(
         "public/disease.html",
         wikidata_result=wikidata_result,
