@@ -28,6 +28,8 @@ from PIL import Image
 from io import BytesIO
 from logging.config import dictConfig
 from flask.logging import default_handler
+from werkzeug.middleware.profiler import ProfilerMiddleware
+
 
 dictConfig(
     {
@@ -61,6 +63,7 @@ FORMATTER_DICT = json.loads(DICTS.joinpath("formatter_dict.json").resolve().read
 
 
 app = Flask(__name__)
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app, profile_dir="./speedlog")
 
 # region app and routes
 @app.route("/")
@@ -395,53 +398,61 @@ def get_all_of_a_kind_for_jinja(query):
     return all_diseases
 
 
-def get_protein_result(wikidata_result):
+def get_protein_result(wikidata_result, use_json=False):
     """ """
-    protein_template = Template(
-        QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
-    )
     protein_qid = wikidata_result["protein"].split("/")[-1]
 
-    query = protein_template.render(protein_qid=protein_qid)
+    if use_json:
+        item_json = requests.get(
+            f"https://www.wikidata.org/wiki/Special:EntityData/{protein_qid}.json"
+        ).json()
+        # In development; will speedup page load but is less transferrable.
 
-    protein_result = query_wikidata(query)[0]
+    else:
+        protein_template = Template(
+            QUERIES.joinpath("protein_template.rq.jinja").read_text(encoding="UTF-8")
+        )
 
-    protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
-    protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
+        query = protein_template.render(protein_qid=protein_qid)
 
-    protein_result["domains"] = get_wikidata_info(
-        "domains_and_families", protein_qid=protein_qid
-    )
-    protein_result["molecular_functions"] = get_wikidata_info(
-        "molecular_functions", protein_qid=protein_qid
-    )
-    protein_result["cell_components"] = get_wikidata_info(
-        "cell_components", protein_qid=protein_qid
-    )
-    protein_result["biological_processes"] = get_wikidata_info(
-        "biological_processes", protein_qid=protein_qid
-    )
-    protein_result["wikipathways"] = get_wikidata_info(
-        "wikipathways", protein_qid=protein_qid
-    )
-    protein_result["reactome_pathways"] = get_wikidata_info(
-        "reactome_pathways", protein_qid=protein_qid
-    )
-    protein_result["protein_complexes"] = get_wikidata_info(
-        "protein_complexes", protein_qid=protein_qid
-    )
-    protein_result["swissbiopics_list"] = ",".join(
-        [
-            a["Gene_Ontology_ID"].split(":")[-1]
-            for a in protein_result["cell_components"]
+        protein_result = query_wikidata(query)[0]
+
+        protein_result["ensembl_ids"] = get_statement_values(protein_qid, "P705")
+        protein_result["refseq_ids"] = get_statement_values(protein_qid, "P637")
+
+        protein_result["domains"] = get_wikidata_info(
+            "domains_and_families", protein_qid=protein_qid
+        )
+        protein_result["molecular_functions"] = get_wikidata_info(
+            "molecular_functions", protein_qid=protein_qid
+        )
+        protein_result["cell_components"] = get_wikidata_info(
+            "cell_components", protein_qid=protein_qid
+        )
+        protein_result["biological_processes"] = get_wikidata_info(
+            "biological_processes", protein_qid=protein_qid
+        )
+        protein_result["wikipathways"] = get_wikidata_info(
+            "wikipathways", protein_qid=protein_qid
+        )
+        protein_result["reactome_pathways"] = get_wikidata_info(
+            "reactome_pathways", protein_qid=protein_qid
+        )
+        protein_result["protein_complexes"] = get_wikidata_info(
+            "protein_complexes", protein_qid=protein_qid
+        )
+        protein_result["swissbiopics_list"] = ",".join(
+            [
+                a["Gene_Ontology_ID"].split(":")[-1]
+                for a in protein_result["cell_components"]
+            ]
+        )
+        uniprot_info = get_uniprot_info(protein_result["UniProt_protein_ID"])
+        protein_result["pdb_ids"] = [
+            {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")
         ]
-    )
-    uniprot_info = get_uniprot_info(protein_result["UniProt_protein_ID"])
-    protein_result["pdb_ids"] = [
-        {"id": id} for id in protein_result["PDB_structure_ID"].split(" | ")
-    ]
 
-    return protein_result, uniprot_info
+        return protein_result, uniprot_info
 
 
 # endregion
