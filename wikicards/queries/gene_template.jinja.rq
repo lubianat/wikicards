@@ -30,7 +30,7 @@ WHERE {
     ?gene wdt:P688 ?protein . 
     ?gene skos:altLabel ?geneAltLabel_ . 
     FILTER ( LANG( ?geneAltLabel_) = "en")
-    ?gene wdt:P692 ?gene_atlas_image .
+    OPTIONAL { ?gene wdt:P692 ?gene_atlas_image . }
 
     OPTIONAL {
       ?protein wdt:P2043 ?protein_length . 
@@ -75,7 +75,12 @@ WHERE {
     OPTIONAL { ?protein wdt:P352 ?UniProt_protein_ID . } .  
     OPTIONAL { ?gene wdt:P351 ?Entrez_Gene_ID . } .    
     OPTIONAL { ?gene wdt:P486 ?MeSH_descriptor_ID . } .
-SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+
+    ?gene rdfs:label ?geneLabel .
+    FILTER (LANG (?geneLabel) = "en")
+    ?protein rdfs:label ?proteinLabel .
+    FILTER (LANG (?proteinLabel) = "en")
+
    
 }
 GROUP BY ?gene ?geneLabel ?UniProt_protein_ID ?Entrez_Gene_ID ?MeSH_descriptor_ID ?article ?en_wiki_label ?cytogenetic_location

@@ -1,6 +1,7 @@
-from wikidata2df import wikidata2df
-from pathlib import Path
 import json
+from pathlib import Path
+
+from wikidata2df import wikidata2df
 
 HERE = Path(__file__).parent.resolve()
 

@@ -12,9 +12,9 @@ WHERE {
                      pq:P459 ?method ;
                      prov:wasDerivedFrom ?refnode ] . 
   
-    OPTIONAL{?refnode   pr:P248 ?ref  .
+    OPTIONAL{
+            ?refnode   pr:P248 ?ref  .
             ?ref wdt:P698 ?pmid .
-            
             } . 
     
     ?method rdfs:label ?methodLabel . FILTER (LANG (?methodLabel) = "en")

@@ -19,13 +19,14 @@
         See <a href="https://www.wikidata.org/wiki/Wikidata:Property_proposal/CIViC_gene_ID">this for status on the
           proposal. </a>
 
+        {% if summaries.wikipedia %}
         <h3>Wikipedia summary</h3>
         (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label
     }}" target="_blank">Wikipedia page</a>) <br>
         <p style="float: right;"> <a href="{{summaries.wikipedia.originalimage.source}}" target="_blank">
             <img src="{{summaries.wikipedia.originalimage.source}}" width="250"></a></p>
         {{summaries.wikipedia.extract_html|safe}}
-
+        {% endif %}
         <h3>Additional information</h3>
         <a href="https://scholia.toolforge.org/gene/{{ids.wikidata.symbol}}">Scholia Profile</a> <br>
         <a href="https://platform.opentargets.org/target/{{ids.Ensembl_gene_ID.symbol}}">Open Targets Platform</a> <br>

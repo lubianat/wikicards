@@ -1,0 +1,14 @@
+SELECT
+?pathway ?pathwayLabel ?Reactome_ID
+WHERE {
+
+    VALUES ?protein { wd:{{protein_qid}} } .    
+
+    ?pathway wdt:P527 ?protein . 
+
+    ?pathway wdt:P3937 ?Reactome_ID .
+  
+    ?pathway rdfs:label ?pathwayLabel .
+    FILTER (LANG (?pathwayLabel) = "en")   
+}
+

@@ -8,7 +8,7 @@ WHERE {
 
     ?complex wdt:P7718 ?Complex_Portal_acession_ID .
   
-SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-   
+    ?complex rdfs:label ?complexLabel .
+    FILTER (LANG (?complexLabel) = "en")   
 }
 

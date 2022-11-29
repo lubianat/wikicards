@@ -8,7 +8,7 @@ WHERE {
 
     ?domain wdt:P2926 ?InterPro_ID .
   
-SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-   
+    ?domain rdfs:label ?domainLabel .
+    FILTER (LANG (?domainLabel) = "en")  
 }
 
