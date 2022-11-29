@@ -1,0 +1,43 @@
+<!-- SUMMARIES -->
+<div class="container" id="literature">
+  <div class="card">
+    <div class="card-header">
+      <a class="btn btn-info btn-sm btn-block mt-3" data-toggle="collapse" href="#collapse_literature" role="button"
+        aria-expanded="false" aria-controls="collapse_literature">
+        <h2> Literature about {{wikidata_result.cellLabel}} </h2>
+      </a>
+    </div>
+    <div class="collapse" id="collapse_literature">
+      <div class="card-body">
+
+
+        <h3>Articles on Wikidata</h3>
+        <iframe style="width: 100%; height: 50vh; border: none;"
+          src="https://query.wikidata.org/embed.html#%0A%20%20SELECT%0A%20%20%3FworkLabel%0A%20%20%3FvenueLabel%0A%20%20%28GROUP_CONCAT%28DISTINCT%20%3Fauthor_label%3B%20separator%3D%22%2C%20%22%29%20AS%20%3Fauthors%29%0A%20%20%28MIN%28%3Fdates%29%20AS%20%3Fdate%29%0A%20%20%28GROUP_CONCAT%28DISTINCT%20%3Ftype_label%3B%20separator%3D%22%2C%20%22%29%20AS%20%3Ftype%29%0A%20%20%28URI%28CONCAT%28%27https%3A%2F%2Fdoi.org%2F%27%2C%20%3FDOI_%29%29%20AS%20%3FDOI%29%0A%20%20%3Fwork%20%0A%0A%20%20WHERE%20%7B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20VALUES%20%3Ftopics%20%7B%20wd%3A{{ids.wikidata.symbol}}%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP921%2Fwdt%3AP279%2a%20%3Ftopics.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP50%20%3Fauthor.%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%3Fwork%20wdt%3AP50%20%3Fauthor_all%20.%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fauthor%20rdfs%3Alabel%20%3Fauthor_label_%20.%20FILTER%20%28LANG%28%3Fauthor_label_%29%20%3D%20%27en%27%29%0A%20%20%7D%0A%20%20BIND%28COALESCE%28%3Fauthor_label_%2C%20SUBSTR%28STR%28%3Fauthor_all%29%2C%2032%29%29%20AS%20%3Fauthor_label%29%0A%20%20OPTIONAL%20%7B%20%3Fwork%20wdt%3AP31%20%3Ftype_%20.%20%3Ftype_%20rdfs%3Alabel%20%3Ftype_label%20.%20FILTER%20%28LANG%28%3Ftype_label%29%20%3D%20%27en%27%29%20%7D%0A%20%20%3Fwork%20wdt%3AP577%20%3Fdatetimes%20.%0A%20%20BIND%28xsd%3Adate%28%3Fdatetimes%29%20AS%20%3Fdates%29%0A%20%20OPTIONAL%20%7B%20%3Fwork%20wdt%3AP356%20%3FDOI_%20%7D%0A%20%20OPTIONAL%20%7B%20%3Fwork%20wdt%3AP1433%20%3Fvenue%20%7D%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%2Cda%2Cde%2Ces%2Cfr%2Cjp%2Cno%2Cru%2Csv%2Czh%22.%20%7D%20%20%0A%20%20%7D%0A%20%20GROUP%20BY%20%3Fwork%20%3FworkLabel%20%3FvenueLabel%20%3FDOI_%0A%20%20ORDER%20BY%20DESC%28%3Fdate%29%20%20%0A%0A%20%20"
+          referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+      </div>
+
+      <h3>Other resources</h3>
+      <ul>
+        <li> <a target="_blank" href="https://scholia.toolforge.org/topic/{{ids.wikidata.symbol}}">Scholia Profile</a>
+        </li>
+        <li> <a target="_blank" href="https://searchy.toolforge.org/{{ids.wikidata.symbol}}">Topic on Searchy</a>
+        </li>
+        <li> <a target="_blank" href="https://scholar.google.com.br/scholar?q={{wikidata_result.cellLabel}}">Search on
+            Google
+            Scholar</a>
+        </li>
+        <li> <a target="_blank" href="https://europepmc.org/search?query={{wikidata_result.cellLabel}}">Search on Europe
+            PMC</a>
+        </li>
+        <li> <a target="_blank" href="https://pubmed.ncbi.nlm.nih.gov/?term={{wikidata_result.cellLabel}}">Search on
+            NCBI
+            PubMed</a>
+        </li>
+
+
+      </ul>
+
+    </div><!-- /.row -->
+  </div>
+</div>

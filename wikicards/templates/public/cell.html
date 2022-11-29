@@ -41,6 +41,8 @@ Cell Type
 {% include 'public/cell/summaries.html' %}
 {% include 'public/cell/markers.html' %}
 
+{% include 'public/cell/literature.html' %}
+
 <script>
   $(document).ready(function () {
 
@@ -76,12 +78,12 @@ Cell Type
     $('#cell').selectize({
       delimiter: ',',
       placeholder: "Select your cell type of interest",
-      maxItems:1,
+      maxItems: 1,
       persist: false,
       valueField: 'id',
       labelField: 'name',
       searchField: ['name', 'id'],
-      options: {{ cells | safe  }},
+      options: {{ cells | safe }},
     });
   </script>
 

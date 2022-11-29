@@ -11,12 +11,14 @@
       <div class="card-body">
 
 
+        {% if summaries.wikipedia %}
         <h3>Wikipedia summary</h3>
         (<a href="https://en.wikipedia.org/wiki/{{wikidata_result.en_wiki_label
     }}" target="_blank">Wikipedia page</a>) <br>
         <p style="float: right;"> <a href="{{summaries.wikipedia.originalimage.source}}" target="_blank">
             <img src="{{summaries.wikipedia.originalimage.source}}" width="250"></a></p>
         {{summaries.wikipedia.extract_html|safe}}
+        {% endif %}
         <h3>Cell Ontology definition</h3>
         (<a href="http://purl.obolibrary.org/obo/{{ids.Cell_Ontology_ID.symbol}}" target="_blank">link</a>) <br>
         <p>{{summaries.cell_ontology}}

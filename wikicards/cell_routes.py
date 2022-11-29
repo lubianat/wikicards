@@ -46,14 +46,15 @@ def particular_cell(cell_qid):
     ids = extract_ids(cell_qid, wikidata_result)
 
     summaries = {}
-    wikipedia_data = get_wikipedia_summary(wikidata_result["en_wiki_label"])
+    if "en_wiki_label" in wikidata_result:
+        wikipedia_data = get_wikipedia_summary(wikidata_result["en_wiki_label"])
 
-    if "originalimage" not in wikipedia_data:
-        wikipedia_data["originalimage"] = {}
-        wikipedia_data["originalimage"]["source"] = ""
-        app.logger.warning("%s has no image", wikidata_result["en_wiki_label"])
+        if "originalimage" not in wikipedia_data:
+            wikipedia_data["originalimage"] = {}
+            wikipedia_data["originalimage"]["source"] = ""
+            app.logger.warning("%s has no image", wikidata_result["en_wiki_label"])
 
-    summaries["wikipedia"] = wikipedia_data
+        summaries["wikipedia"] = wikipedia_data
     summaries["cell_ontology"] = get_ontological_definition(
         ids["Cell_Ontology_ID"]["symbol"]
     )

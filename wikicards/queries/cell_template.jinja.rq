@@ -4,8 +4,11 @@ SELECT DISTINCT ?cell ?cellLabel (REPLACE(STR(?article), "https://en.wikipedia.o
   }
   ?cell rdfs:label ?cellLabel.
   FILTER((LANG(?cellLabel)) = "en")
+
+  OPTIONAL {
   ?cell skos:altLabel ?cellAltLabel_.
   FILTER((LANG(?cellAltLabel_)) = "en")
+  }
   OPTIONAL {
     ?article schema:about ?cell;
       schema:inLanguage "en".

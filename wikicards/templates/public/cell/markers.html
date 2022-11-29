@@ -19,7 +19,6 @@
         <iframe style="width: 100%; height: 50vh; border: none;"
           src="https://query.wikidata.org/embed.html#SELECT%20DISTINCT%20%3Fmarker%20%3FmarkerLabel%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20<{{wikidata_result.cell}}>%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ83310%20.%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker.%20%0A%20%20%3Fmarker%20rdfs%3Alabel%20%3FmarkerLabel%20.%20%0A%20%20FILTER%20%28LANG%20%28%3FmarkerLabel%29%20%3D%20%22en%22%29%0A%7D%0A%0A"
           referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
-        {{summaries.wikipedia.extract_html|safe}}
 
         <h3>Human diseases that share markers</h3>
         <iframe style="width: 100%; height: 50vh; border: none;"
@@ -28,7 +27,7 @@
 
         <h3>Cell types that share markers</h3>
         <iframe style="width: 100%; height: 50vh; border: none;"
-          src="https://query.wikidata.org/embed.html#SELECT%20%0A%3Fcell_typeLabel%20%0A%28COUNT%28DISTINCT%20%3Fmarker_gene%29%20AS%20%3Fcount%29%20%0A%28GROUP_CONCAT%28DISTINCT%20%3FgeneLabel%3B%20SEPARATOR%3D%22%2C%20%22%29%20AS%20%3Fgenes%29%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20wd%3AQ43054%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ15978631%20.%0A%20%20%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker_gene%20.%20%20%20%20%0A%20%20%3Fcell_type%20wdt%3AP8872%20%3Fmarker_gene%20%20.%20%20%20%20%0A%20%20%0A%20%20%3Fcell_type%20rdfs%3Alabel%20%3Fcell_typeLabel%20.%0A%20%20%3Fmarker_gene%20rdfs%3Alabel%20%3FgeneLabel%20.%0A%0A%20%20FILTER%28LANG%28%3Fcell_typeLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%28LANG%28%3FgeneLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%20%28%20%3Fcell_type%20%21%3D%20%3Fhuman_version%20%29%0A%20%20%0A%20%7D%0A%0AGROUP%20BY%20%3Fcell_typeLabel%0AORDER%20BY%20DESC%28%3Fcount%29"
+          src="https://query.wikidata.org/embed.html#SELECT%20%0A%3Fcell_typeLabel%20%0A%28COUNT%28DISTINCT%20%3Fmarker_gene%29%20AS%20%3Fcount%29%20%0A%28GROUP_CONCAT%28DISTINCT%20%3FgeneLabel%3B%20SEPARATOR%3D%22%2C%20%22%29%20AS%20%3Fgenes%29%0AWHERE%20%0A%7B%0A%20%20%3Fhuman_version%20wdt%3AP10019%2a%20%20%20wd%3A{{ids.wikidata.symbol}}%20.%20%0A%20%20%3Fhuman_version%20wdt%3AP703%20wd%3AQ15978631%20.%0A%20%20%0A%20%20%3Fhuman_version%20wdt%3AP8872%20%3Fmarker_gene%20.%20%20%20%20%0A%20%20%3Fcell_type%20wdt%3AP8872%20%3Fmarker_gene%20%20.%20%20%20%20%0A%20%20%0A%20%20%3Fcell_type%20rdfs%3Alabel%20%3Fcell_typeLabel%20.%0A%20%20%3Fmarker_gene%20rdfs%3Alabel%20%3FgeneLabel%20.%0A%0A%20%20FILTER%28LANG%28%3Fcell_typeLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%28LANG%28%3FgeneLabel%29%20%3D%20%22en%22%29%0A%20%20FILTER%20%28%20%3Fcell_type%20%21%3D%20%3Fhuman_version%20%29%0A%20%20%0A%20%7D%0A%0AGROUP%20BY%20%3Fcell_typeLabel%0AORDER%20BY%20DESC%28%3Fcount%29"
           referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
 
         </p>
