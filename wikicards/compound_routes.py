@@ -3,7 +3,7 @@ import re
 from io import BytesIO
 from pathlib import Path
 import requests
-from app import app
+from wikicards.app import app
 from flask import redirect, render_template, request
 from .helper import *
 from jinja2 import Template

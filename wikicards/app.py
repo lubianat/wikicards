@@ -15,7 +15,7 @@ def about():
     return render_template("about.html")
 
 
-import disease_routes
-import gene_routes
-import cell_routes
-import compound_routes
+from wikicards.disease_routes import *
+from wikicards.gene_routes import *
+from wikicards.cell_routes import *
+from wikicards.compound_routes import *
