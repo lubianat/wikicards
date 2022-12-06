@@ -15,7 +15,7 @@ import requests
 import xmltodict
 from Bio import Entrez
 from flask.logging import default_handler
-from helper import *
+from .helper import *
 from jinja2 import Template
 from PIL import Image
 from wdcuration import get_statement_values, query_wikidata

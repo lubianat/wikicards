@@ -5,7 +5,7 @@ from pathlib import Path
 import requests
 from app import app
 from flask import redirect, render_template, request
-from helper import *
+from .helper import *
 from jinja2 import Template
 from PIL import Image
 from wdcuration import get_statement_values, query_wikidata
