@@ -2,29 +2,30 @@
 <div class="container" id="domains">
   <div class="card">
     <div class="card-header">
-      <a class="btn btn-info btn-sm btn-block mt-3" data-toggle="collapse" href="#collapseDomains" role="button" aria-expanded="false"
-        aria-controls="collapseDomains">
+      <a class="btn btn-info btn-sm btn-block mt-3" data-toggle="collapse" href="#collapseDomains" role="button"
+        aria-expanded="false" aria-controls="collapseDomains">
         <h2> Domains for {{wikidata_result.geneLabel}} </h2>
       </a>
     </div>
     <div class="collapse" id="collapseDomains">
+      <div class="card-body">
 
-      <h3> InterPro Domains</h3>
-      {% for domain in protein_result.domains %}
-      <p><a href="https://www.ebi.ac.uk/interpro/entry/InterPro/{{domain.InterPro_ID}}"
-          target=" _blank">{{domain.domainLabel}}</a></p>
-      {% endfor %}
-      <p>Graphical view on InterPro: <a
-          href="https://www.ebi.ac.uk/interpro/protein/UniProt/{{protein_result.UniProt_protein_ID}}/"
-          target=" _blank">{{protein_result.UniProt_protein_ID}}</a>
-      </p>
-      <h2>Domain information from UniProt</h2>
-      <a href="https://www.uniprot.org/uniprotkb/P04637/{protein_result.UniProt_protein_ID}}/entry#family_and_domains"
-        target=" _blank">{{protein_result.UniProt_protein_ID}}</a><br>
-      {{uniprot_info.domain_info}}
-      <p>Skipped: Gene Families from HPA, Suggested Antigen Peptide Sequences, Genes that share domains</p>
+        <h3> InterPro Domains</h3>
+        {% for domain in protein_result.domains %}
+        <p><a href="https://www.ebi.ac.uk/interpro/entry/InterPro/{{domain.InterPro_ID}}"
+            target=" _blank">{{domain.domainLabel}}</a></p>
+        {% endfor %}
+        <p>Graphical view on InterPro: <a
+            href="https://www.ebi.ac.uk/interpro/protein/UniProt/{{protein_result.UniProt_protein_ID}}/"
+            target=" _blank">{{protein_result.UniProt_protein_ID}}</a>
+        </p>
+        <h2>Domain information from UniProt</h2>
+        <a href="https://www.uniprot.org/uniprotkb/P04637/{protein_result.UniProt_protein_ID}}/entry#family_and_domains"
+          target=" _blank">{{protein_result.UniProt_protein_ID}}</a><br>
+        {{uniprot_info.domain_info}}
+        <p>Skipped: Gene Families from HPA, Suggested Antigen Peptide Sequences, Genes that share domains</p>
 
+      </div>
     </div>
-  </div>
-</div><!-- /.row -->
+  </div><!-- /.row -->
 </div>
