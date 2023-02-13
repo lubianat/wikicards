@@ -432,7 +432,7 @@
     "Webpedigrees_ID": "http://www.webpedigrees.com/pedigree.php?nid=$1",
     "Weeds_in_Ontario_ID": "http://www.omafra.gov.on.ca/english/crops/facts/ontweeds/$1.htm",
     "Whonamedit?_doctor_ID": "http://www.whonamedit.com/doctor.cfm/$1.html",
-    "WikiPathways_ID": "https://new.wikipathways.org/pathways/$1",
+    "WikiPathways_ID": "https://www.wikipathways.org/pathways/$1",
     "WikiSkripta_ID": "https://www.wikiskripta.eu/index.php?curid=$1",
     "Wiki_Aves_bird_ID": "https://www.wikiaves.com.br/$1",
     "Wild_Herps_ID": "http://www.wildherps.com/species/$1.html",
